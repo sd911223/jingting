@@ -54,7 +54,6 @@ public class SysPoliceBoothServiceImpl implements ISysPoliceBoothService
     @Override
     public int insertSysPoliceBooth(SysPoliceBooth sysPoliceBooth)
     {
-        sysPoliceBooth.setCreateTime(DateUtils.getNowDate());
         return sysPoliceBoothMapper.insertSysPoliceBooth(sysPoliceBooth);
     }
 
@@ -67,7 +66,6 @@ public class SysPoliceBoothServiceImpl implements ISysPoliceBoothService
     @Override
     public int updateSysPoliceBooth(SysPoliceBooth sysPoliceBooth)
     {
-        sysPoliceBooth.setUpdateTime(DateUtils.getNowDate());
         return sysPoliceBoothMapper.updateSysPoliceBooth(sysPoliceBooth);
     }
 

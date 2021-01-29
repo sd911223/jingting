@@ -104,6 +104,7 @@ public class SysPoliceBoothController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(SysPoliceBooth sysPoliceBooth) {
+        sysPoliceBooth.setUpdateBy(ShiroUtils.getLoginName());
         return toAjax(sysPoliceBoothService.updateSysPoliceBooth(sysPoliceBooth));
     }
 
