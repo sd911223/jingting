@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysPoliceRangeMapper">
+    
+    <resultMap type="com.ruoyi.system.domain.SysPoliceRange" id="SysPoliceRangeResult">
+        <result property="id"    column="id"    />
+        <result property="phone"    column="phone"    />
+        <result property="rangeDistance"    column="range_distance"    />
+        <result property="isDistance"    column="is_distance"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectSysPoliceRangeVo">
+        select id, phone, range_distance, is_distance, del_flag, create_time from sys_police_range
+    </sql>
+
+    <select id="selectSysPoliceRangeList" parameterType="com.ruoyi.system.domain.SysPoliceRange" resultMap="SysPoliceRangeResult">
+        <include refid="selectSysPoliceRangeVo"/>
+        <where>  
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="rangeDistance != null "> and range_distance = #{rangeDistance}</if>
+            <if test="isDistance != null  and isDistance != ''"> and is_distance = #{isDistance}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysPoliceRangeById" parameterType="Long" resultMap="SysPoliceRangeResult">
+        <include refid="selectSysPoliceRangeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysPoliceRange" parameterType="com.ruoyi.system.domain.SysPoliceRange" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_police_range
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="rangeDistance != null">range_distance,</if>
+            <if test="isDistance != null">is_distance,</if>
+            <if test="delFlag != null">del_flag,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="rangeDistance != null">#{rangeDistance},</if>
+            <if test="isDistance != null">#{isDistance},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateSysPoliceRange" parameterType="com.ruoyi.system.domain.SysPoliceRange">
+        update sys_police_range
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="rangeDistance != null">range_distance = #{rangeDistance},</if>
+            <if test="isDistance != null">is_distance = #{isDistance},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysPoliceRangeById" parameterType="Long">
+        delete from sys_police_range where id = #{id}
+    </delete>
+
+    <delete id="deleteSysPoliceRangeByIds" parameterType="String">
+        delete from sys_police_range where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -5,13 +5,15 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.math.BigDecimal;
+
 /**
- * 警亭管理对象 sys_police_booth
+ * 位置检测对象 sys_police_range
  *
  * @author ruoyi
- * @date 2021-01-28
+ * @date 2021-02-01
  */
-public class SysPoliceBooth extends BaseEntity {
+public class SysPoliceRange extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -26,33 +28,31 @@ public class SysPoliceBooth extends BaseEntity {
     private String phone;
 
     /**
-     * 警亭名称
+     * 距离范围
      */
-    @Excel(name = "警亭名称")
-    private String policeBoothName;
+    @Excel(name = "距离范围")
+    private Double rangeDistance;
 
     /**
-     * 经度
+     * 是否在范围内
      */
-    @Excel(name = "经度")
-    private Double longitude;
-
-    /**
-     * 纬度
-     */
-    @Excel(name = "纬度")
-    private Double latitude;
-
-    /**
-     * 区域范围（米）
-     */
-    @Excel(name = "区域范围")
-    private Integer rangeArea;
+    @Excel(name = "是否在范围内")
+    private String isDistance;
 
     /**
      * 删除标志（0代表存在 2代表删除）
      */
     private String delFlag;
+
+    /**
+     * 经度
+     */
+    private Double longitude;
+
+    /**
+     * 纬度
+     */
+    private Double latitude;
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
@@ -86,21 +86,20 @@ public class SysPoliceBooth extends BaseEntity {
         return phone;
     }
 
-    public void setPoliceBoothName(String policeBoothName) {
-        this.policeBoothName = policeBoothName;
+    public void setRangeDistance(Double rangeDistance) {
+        this.rangeDistance = rangeDistance;
     }
 
-    public String getPoliceBoothName() {
-        return policeBoothName;
+    public Double getRangeDistance() {
+        return rangeDistance;
     }
 
-
-    public Integer getRangeArea() {
-        return rangeArea;
+    public void setIsDistance(String isDistance) {
+        this.isDistance = isDistance;
     }
 
-    public void setRangeArea(Integer rangeArea) {
-        this.rangeArea = rangeArea;
+    public String getIsDistance() {
+        return isDistance;
     }
 
     public void setDelFlag(String delFlag) {
@@ -116,12 +115,10 @@ public class SysPoliceBooth extends BaseEntity {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("id", getId())
                 .append("phone", getPhone())
-                .append("policeBoothName", getPoliceBoothName())
+                .append("rangeDistance", getRangeDistance())
+                .append("isDistance", getIsDistance())
                 .append("delFlag", getDelFlag())
-                .append("createBy", getCreateBy())
                 .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
                 .toString();
     }
 }

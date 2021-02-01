@@ -10,10 +10,6 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysPoliceBooth;
 import com.ruoyi.system.service.ISysPoliceBoothService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.gavaghan.geodesy.Ellipsoid;
-import org.gavaghan.geodesy.GeodeticCalculator;
-import org.gavaghan.geodesy.GeodeticCurve;
-import org.gavaghan.geodesy.GlobalCoordinates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -119,41 +115,5 @@ public class SysPoliceBoothController extends BaseController {
         return toAjax(sysPoliceBoothService.deleteSysPoliceBoothByIds(ids));
     }
 
-    public static void main(String[] args)
 
-    {
-
-        GlobalCoordinates source = new GlobalCoordinates(30.537311740, 104.0563604058);
-
-        GlobalCoordinates target = new GlobalCoordinates(30.537422, 104.0562760);
-
-
-
-        double meter1 = getDistanceMeter(source, target, Ellipsoid.Sphere);
-
-        double meter2 = getDistanceMeter(source, target, Ellipsoid.WGS84);
-
-
-
-        System.out.println("Sphere坐标系计算结果："+meter1 + "米");
-
-        System.out.println("WGS84坐标系计算结果："+meter2 + "米");
-
-    }
-
-
-
-    public static double getDistanceMeter(GlobalCoordinates gpsFrom, GlobalCoordinates gpsTo, Ellipsoid ellipsoid)
-
-    {
-
-        //创建GeodeticCalculator，调用计算方法，传入坐标系、经纬度用于计算距离
-
-        GeodeticCurve geoCurve = new GeodeticCalculator().calculateGeodeticCurve(ellipsoid, gpsFrom, gpsTo);
-
-
-
-        return geoCurve.getEllipsoidalDistance();
-
-    }
 }
