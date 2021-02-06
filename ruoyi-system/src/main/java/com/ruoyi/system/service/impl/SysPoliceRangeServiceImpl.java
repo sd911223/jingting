@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.MapUtils;
 import com.ruoyi.system.domain.SysPoliceBooth;
 import com.ruoyi.system.domain.SysPoliceRange;
 import com.ruoyi.system.mapper.SysPoliceBoothMapper;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -61,21 +63,37 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
      */
     @Override
     public int insertSysPoliceRange(SysPoliceRange sysPoliceRange) {
+//        BigDecimal b1 = new BigDecimal(sysPoliceRange.getLongitude());
+//        double longitude = b1.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+//        BigDecimal b2 = new BigDecimal(sysPoliceRange.getLatitude());
+//        double latitude = b2.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+        log.info("上报位置,手机号{},经度:{},纬度:{}", sysPoliceRange.getPhone(), sysPoliceRange.getLongitude(), sysPoliceRange.getLatitude());
+//        log.info("处理上报位置,手机号{},经度:{},纬度:{}", sysPoliceRange.getPhone(), longitude, latitude);
         SysPoliceBooth sysPoliceBooth = new SysPoliceBooth();
         sysPoliceBooth.setPhone(sysPoliceRange.getPhone());
         List<SysPoliceBooth> boothList = sysPoliceBoothMapper.selectSysPoliceBoothList(sysPoliceBooth);
         if (!boothList.isEmpty()) {
             SysPoliceBooth policeBooth = boothList.get(0);
-            GlobalCoordinates source = new GlobalCoordinates(policeBooth.getLatitude(), policeBooth.getLongitude());
-
-            GlobalCoordinates target = new GlobalCoordinates(sysPoliceRange.getLatitude(), sysPoliceRange.getLongitude());
-            double meter2 = getDistanceMeter(source, target, Ellipsoid.WGS84);
-            sysPoliceRange.setRangeDistance(meter2);
-            if (meter2 > policeBooth.getRangeArea()) {
-                sysPoliceRange.setIsDistance("是");
-            } else {
+            log.info("设置区域,手机号{},经度:{},纬度:{}", policeBooth.getPhone(), policeBooth.getLongitude(), policeBooth.getLatitude());
+            double getDistance = MapUtils.GetDistance(sysPoliceRange.getLatitude(), sysPoliceRange.getLongitude(), policeBooth.getLatitude(), policeBooth.getLongitude());
+            BigDecimal b = new BigDecimal(getDistance);
+            double doubleValue = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//            GlobalCoordinates source = new GlobalCoordinates(policeBooth.getLatitude(), policeBooth.getLongitude());
+//
+//            GlobalCoordinates target = new GlobalCoordinates(latitude, longitude);
+//            double meter2 = getDistanceMeter(source, target, Ellipsoid.WGS84);
+            log.info("距离=======,手机号{},距离:{}", policeBooth.getPhone(), getDistance);
+//            BigDecimal b = new BigDecimal(meter2);
+//            double doubleValue = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            log.info("距离=======,手机号{},距离:{}", policeBooth.getPhone(), doubleValue);
+            sysPoliceRange.setRangeDistance(doubleValue);
+            if (doubleValue > policeBooth.getRangeArea()) {
                 sysPoliceRange.setIsDistance("否");
+            } else {
+                sysPoliceRange.setIsDistance("是");
             }
+        } else {
+
         }
 
         return sysPoliceRangeMapper.insertSysPoliceRange(sysPoliceRange);

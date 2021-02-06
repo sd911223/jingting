@@ -5,11 +5,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.SysPoliceRange;
@@ -80,11 +76,10 @@ public class SysPoliceRangeController extends BaseController
     /**
      * 新增保存位置检测
      */
-    @RequiresPermissions("system:range:add")
     @Log(title = "位置检测", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(SysPoliceRange sysPoliceRange)
+    public AjaxResult addSave(@RequestBody SysPoliceRange sysPoliceRange)
     {
         return toAjax(sysPoliceRangeService.insertSysPoliceRange(sysPoliceRange));
     }
