@@ -1,48 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SysPoliceBoothMapper">
-    
+
     <resultMap type="com.ruoyi.system.domain.SysPoliceBooth" id="SysPoliceBoothResult">
-        <result property="id"    column="id"    />
-        <result property="phone"    column="phone"    />
-        <result property="policeBoothName"    column="police_booth_name"    />
-        <result property="longitude"    column="longitude"    />
-        <result property="latitude"    column="latitude"    />
-        <result property="rangeArea"    column="range_area"    />
-        <result property="delFlag"    column="del_flag"    />
-        <result property="createBy"    column="create_by"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"    column="update_by"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="id" column="id"/>
+        <result property="phone" column="phone"/>
+        <result property="policeBoothName" column="police_booth_name"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+        <result property="rangeArea" column="range_area"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectSysPoliceBoothVo">
-        select id, phone, police_booth_name, longitude, latitude, range_area, del_flag, create_by, create_time, update_by, update_time from sys_police_booth
+        select id, phone, name ,police_booth_name, longitude, latitude, range_area, del_flag, create_by, create_time, update_by, update_time from sys_police_booth
     </sql>
 
-    <select id="selectSysPoliceBoothList" parameterType="com.ruoyi.system.domain.SysPoliceBooth" resultMap="SysPoliceBoothResult">
+    <select id="selectSysPoliceBoothList" parameterType="com.ruoyi.system.domain.SysPoliceBooth"
+            resultMap="SysPoliceBoothResult">
         <include refid="selectSysPoliceBoothVo"/>
-        <where>  
-            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
-            <if test="policeBoothName != null  and policeBoothName != ''"> and police_booth_name like concat('%', #{policeBoothName}, '%')</if>
-            <if test="longitude != null "> and longitude = #{longitude}</if>
-            <if test="latitude != null "> and latitude = #{latitude}</if>
-            <if test="rangeArea != null "> and range_area = #{rangeArea}</if>
+        <where>
+            <if test="phone != null  and phone != ''">and phone = #{phone}</if>
+            <if test="policeBoothName != null  and policeBoothName != ''">and police_booth_name like concat('%',
+                #{policeBoothName}, '%')
+            </if>
+            <if test="longitude != null ">and longitude = #{longitude}</if>
+            <if test="latitude != null ">and latitude = #{latitude}</if>
+            <if test="rangeArea != null ">and range_area = #{rangeArea}</if>
         </where>
     </select>
-    
+
     <select id="selectSysPoliceBoothById" parameterType="Long" resultMap="SysPoliceBoothResult">
         <include refid="selectSysPoliceBoothVo"/>
         where id = #{id}
     </select>
-        
-    <insert id="insertSysPoliceBooth" parameterType="com.ruoyi.system.domain.SysPoliceBooth" useGeneratedKeys="true" keyProperty="id">
+
+    <insert id="insertSysPoliceBooth" parameterType="com.ruoyi.system.domain.SysPoliceBooth" useGeneratedKeys="true"
+            keyProperty="id">
         insert into sys_police_booth
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="phone != null">phone,</if>
             <if test="policeBoothName != null">police_booth_name,</if>
+            <if test="name != null">name,</if>
             <if test="longitude != null">longitude,</if>
             <if test="latitude != null">latitude,</if>
             <if test="rangeArea != null">range_area,</if>
@@ -50,10 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             create_time
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="phone != null">#{phone},</if>
             <if test="policeBoothName != null">#{policeBoothName},</if>
+            <if test="name != null">#{name},</if>
             <if test="longitude != null">#{longitude},</if>
             <if test="latitude != null">#{latitude},</if>
             <if test="rangeArea != null">#{rangeArea},</if>
@@ -61,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             sysdate()
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateSysPoliceBooth" parameterType="com.ruoyi.system.domain.SysPoliceBooth">
@@ -69,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="phone != null">phone = #{phone},</if>
             <if test="policeBoothName != null">police_booth_name = #{policeBoothName},</if>
+            <if test="name != null">name = #{name},</if>
             <if test="longitude != null">longitude = #{longitude},</if>
             <if test="latitude != null">latitude = #{latitude},</if>
             <if test="rangeArea != null">range_area = #{rangeArea},</if>
@@ -86,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSysPoliceBoothByIds" parameterType="String">
-        delete from sys_police_booth where id in 
+        delete from sys_police_booth where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

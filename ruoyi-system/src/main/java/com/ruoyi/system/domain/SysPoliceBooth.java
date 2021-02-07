@@ -24,6 +24,11 @@ public class SysPoliceBooth extends BaseEntity {
      */
     @Excel(name = "手机号")
     private String phone;
+    /**
+     * 姓名
+     */
+    @Excel(name = "姓名")
+    private String name;
 
     /**
      * 警亭名称
@@ -53,6 +58,14 @@ public class SysPoliceBooth extends BaseEntity {
      * 删除标志（0代表存在 2代表删除）
      */
     private String delFlag;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
