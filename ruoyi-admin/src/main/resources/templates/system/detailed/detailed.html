@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('每日工作填写列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>在岗辅警：</label>
+                                <input type="text" name="jobNumber"/>
+                            </li>
+                            <li>
+                                <label>值班站长：</label>
+                                <input type="text" name="userName"/>
+                            </li>
+                            <li>
+                                <label>填写时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择填写时间" name="writeTime"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:detailed:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:detailed:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:detailed:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:detailed:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:detailed:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:detailed:remove')}]];
+        var isJobDatas = [[${@dict.getType('sys_yes_no')}]];
+        var isNotJobDatas = [[${@dict.getType('sys_yes_no')}]];
+        var isIdenticalDatas = [[${@dict.getType('sys_yes_no')}]];
+        var goodsIsTidyDatas = [[${@dict.getType('sys_yes_no')}]];
+        var beddingIsTidyDatas = [[${@dict.getType('sys_yes_no')}]];
+        var tablewareIsTidyDatas = [[${@dict.getType('sys_yes_no')}]];
+        var healthIsStandardDatas = [[${@dict.getType('sys_yes_no')}]];
+        var healthIsBlindDatas = [[${@dict.getType('sys_yes_no')}]];
+        var clothesIsStandardDatas = [[${@dict.getType('sys_yes_no')}]];
+        var nailsIsStandardDatas = [[${@dict.getType('sys_yes_no')}]];
+        var cardIsHealthDatas = [[${@dict.getType('sys_yes_no')}]];
+        var cardIsEquipmentDatas = [[${@dict.getType('sys_yes_no')}]];
+        var cardIsSituationDatas = [[${@dict.getType('sys_yes_no')}]];
+        var cardIsRepairDatas = [[${@dict.getType('sys_yes_no')}]];
+        var videoIsHealthDatas = [[${@dict.getType('sys_yes_no')}]];
+        var videoIsJobDatas = [[${@dict.getType('sys_yes_no')}]];
+        var videoIsPhoneDatas = [[${@dict.getType('sys_yes_no')}]];
+        var videoIsBeddingDatas = [[${@dict.getType('sys_yes_no')}]];
+        var videoIsLeaderDatas = [[${@dict.getType('sys_yes_no')}]];
+        var meetingIsMeetingDatas = [[${@dict.getType('sys_yes_no')}]];
+        var meetingIsJobDatas = [[${@dict.getType('sys_yes_no')}]];
+        var meetingIsFakeDatas = [[${@dict.getType('sys_yes_no')}]];
+        var meetingIsLanguageDatas = [[${@dict.getType('sys_yes_no')}]];
+        var meetingIsFileDatas = [[${@dict.getType('sys_yes_no')}]];
+        var allIsAdvanceDatas = [[${@dict.getType('sys_yes_no')}]];
+        var allIsContentDatas = [[${@dict.getType('sys_yes_no')}]];
+        var allIsLogDatas = [[${@dict.getType('sys_yes_no')}]];
+        var allIsGraspDatas = [[${@dict.getType('sys_yes_no')}]];
+        var allIsLanguageDatas = [[${@dict.getType('sys_yes_no')}]];
+        var allIsWriteDatas = [[${@dict.getType('sys_yes_no')}]];
+        var electronIsGraspDatas = [[${@dict.getType('sys_yes_no')}]];
+        var electronIsInputDatas = [[${@dict.getType('sys_yes_no')}]];
+        var electronIsErrorDatas = [[${@dict.getType('sys_yes_no')}]];
+        var briefingIsWriteDatas = [[${@dict.getType('sys_yes_no')}]];
+        var briefingIsSignDatas = [[${@dict.getType('sys_yes_no')}]];
+        var epidemicIsSuppliesDatas = [[${@dict.getType('sys_yes_no')}]];
+        var epidemicIsCodeDatas = [[${@dict.getType('sys_yes_no')}]];
+        var epidemicIsDisinfectionDatas = [[${@dict.getType('sys_yes_no')}]];
+        var epidemicIsLedgerDatas = [[${@dict.getType('sys_yes_no')}]];
+        var epidemicIsVentilationDatas = [[${@dict.getType('sys_yes_no')}]];
+        var epidemicIsTemperatureDatas = [[${@dict.getType('sys_yes_no')}]];
+        var epidemicIsCardDatas = [[${@dict.getType('sys_yes_no')}]];
+        var minuteIsCircuitDatas = [[${@dict.getType('sys_yes_no')}]];
+        var minuteIsEquipmentDatas = [[${@dict.getType('sys_yes_no')}]];
+        var minuteIsHandleDatas = [[${@dict.getType('sys_yes_no')}]];
+        var minuteIsSpecificationDatas = [[${@dict.getType('sys_yes_no')}]];
+        var minuteIsCompleteDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsJoinDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsIntactDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsVideoDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsCheckDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsLedgerDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsAlarmDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsTestDatas = [[${@dict.getType('sys_yes_no')}]];
+        var basisIsCallDatas = [[${@dict.getType('sys_yes_no')}]];
+        var prefix = ctx + "system/detailed";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "每日工作填写",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '主键id',
+                    visible: false
+                },
+                {
+                    field: 'jobNumber',
+                    title: '在岗辅警'
+                },
+                {
+                    field: 'userName',
+                    title: '值班站长'
+                },
+                {
+                    field: 'isJob',
+                    title: '值班人员是否在岗在位',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(isJobDatas, value);
+                    }
+                },
+                {
+                    field: 'isNotJob',
+                    title: '值班人员是否存在脱岗',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(isNotJobDatas, value);
+                    }
+                },
+                {
+                    field: 'isIdentical',
+                    title: '在岗人员是否与值班表一致',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(isIdenticalDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'goodsIsTidy',
+                    title: '装备及桌面物品摆放是否整齐',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(goodsIsTidyDatas, value);
+                    }
+                },
+                {
+                    field: 'beddingIsTidy',
+                    title: '备勤室床铺、被褥是否整齐干净',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(beddingIsTidyDatas, value);
+                    }
+                },
+                {
+                    field: 'tablewareIsTidy',
+                    title: '厨房碗筷摆放、储物柜整洁度是否达标',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(tablewareIsTidyDatas, value);
+                    }
+                },
+                {
+                    field: 'healthIsStandard',
+                    title: '便民警务站周边卫生是否达标',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(healthIsStandardDatas, value);
+                    }
+                },
+                {
+                    field: 'healthIsBlind',
+                    title: '便民警务站内部是否存在卫生死角',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(healthIsBlindDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue1',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation1',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'clothesIsStandard',
+                    title: '值班人员着装是否规范',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(clothesIsStandardDatas, value);
+                    }
+                },
+                {
+                    field: 'nailsIsStandard',
+                    title: '民辅警是否存在留指甲、染头发等情况',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(nailsIsStandardDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue2',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation2',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'cardIsHealth',
+                    title: '巡逻车整体卫生情况是否达标',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(cardIsHealthDatas, value);
+                    }
+                },
+                {
+                    field: 'cardIsEquipment',
+                    title: '巡逻车是否按照要求配备灭火器、阻车钉等必要装备',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(cardIsEquipmentDatas, value);
+                    }
+                },
+                {
+                    field: 'cardIsSituation',
+                    title: '巡逻车车况是否良好',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(cardIsSituationDatas, value);
+                    }
+                },
+                {
+                    field: 'cardIsRepair',
+                    title: '巡逻车是否存在损坏未修理的地方',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(cardIsRepairDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue3',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation3',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'videoIsHealth',
+                    title: '视频会议室卫生及桌面摆放是否合格',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(videoIsHealthDatas, value);
+                    }
+                },
+                {
+                    field: 'videoIsJob',
+                    title: '视频会议室值班人员是否在岗在位',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(videoIsJobDatas, value);
+                    }
+                },
+                {
+                    field: 'videoIsPhone',
+                    title: '视频会议室是否存在将手机带入情况',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(videoIsPhoneDatas, value);
+                    }
+                },
+                {
+                    field: 'videoIsBedding',
+                    title: '视频会议室着装是否规范',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(videoIsBeddingDatas, value);
+                    }
+                },
+                {
+                    field: 'videoIsLeader',
+                    title: '视频会议室带班领导汇报情况是否达标',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(videoIsLeaderDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue4',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation4',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'meetingIsMeeting',
+                    title: '是否严格落实每日召开晨会',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(meetingIsMeetingDatas, value);
+                    }
+                },
+                {
+                    field: 'meetingIsJob',
+                    title: '晨会是否传达近期重要工作安排',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(meetingIsJobDatas, value);
+                    }
+                },
+                {
+                    field: 'meetingIsFake',
+                    title: '晨会记录是否详实、无造假情况',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(meetingIsFakeDatas, value);
+                    }
+                },
+                {
+                    field: 'meetingIsLanguage',
+                    title: '是否学习国家通用语言',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(meetingIsLanguageDatas, value);
+                    }
+                },
+                {
+                    field: 'meetingIsFile',
+                    title: '是否落实学习会议及文件',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(meetingIsFileDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue5',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation5',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'allIsAdvance',
+                    title: '是否制定符合本站实际的推进表',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(allIsAdvanceDatas, value);
+                    }
+                },
+                {
+                    field: 'allIsContent',
+                    title: '站长是否能够熟练掌握授课内容',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(allIsContentDatas, value);
+                    }
+                },
+                {
+                    field: 'allIsLog',
+                    title: '每日训练日志是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(allIsLogDatas, value);
+                    }
+                },
+                {
+                    field: 'allIsGrasp',
+                    title: '民辅警是否对已训练内容掌握熟练',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(allIsGraspDatas, value);
+                    }
+                },
+                {
+                    field: 'allIsLanguage',
+                    title: '国语学习是否制定推进计划',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(allIsLanguageDatas, value);
+                    }
+                },
+                {
+                    field: 'allIsWrite',
+                    title: '国语学习笔记是否按照推进计划书写',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(allIsWriteDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue6',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation6',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'electronIsGrasp',
+                    title: '站长及内勤是否熟练掌握电子台账录入',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(electronIsGraspDatas, value);
+                    }
+                },
+                {
+                    field: 'electronIsInput',
+                    title: '各类电子台账是否做到及时录入',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(electronIsInputDatas, value);
+                    }
+                },
+                {
+                    field: 'electronIsError',
+                    title: '各类电子台账是否存在录入数据错误',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(electronIsErrorDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue11',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation11',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'briefingIsWrite',
+                    title: '内勤是否能够较好完成简报情报撰写',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(briefingIsWriteDatas, value);
+                    }
+                },
+                {
+                    field: 'briefingIsSign',
+                    title: '简报情报信息是否按照要求进行上报',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(briefingIsSignDatas, value);
+                    }
+                },
+                {
+                    field: 'briefingIsSituation',
+                    title: '本周简报上报情况'
+                },
+                {
+                    field: 'briefingIsIntelligence',
+                    title: '情报上报情况'
+                },
+                {
+                    field: 'existIssue7',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation7',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'epidemicIsSupplies',
+                    title: '消毒液、洗手液等防疫物资是否齐全',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(epidemicIsSuppliesDatas, value);
+                    }
+                },
+                {
+                    field: 'epidemicIsCode',
+                    title: '是否严格落实进门查验核酸检测卡、健康码、消毒灯制度',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(epidemicIsCodeDatas, value);
+                    }
+                },
+                {
+                    field: 'epidemicIsDisinfection',
+                    title: '是否熟练掌握消毒液配比比例及方法',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(epidemicIsDisinfectionDatas, value);
+                    }
+                },
+                {
+                    field: 'epidemicIsLedger',
+                    title: '消毒台账是否正确填写',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(epidemicIsLedgerDatas, value);
+                    }
+                },
+                {
+                    field: 'epidemicIsVentilation',
+                    title: '通风台账是否正确填写',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(epidemicIsVentilationDatas, value);
+                    }
+                },
+                {
+                    field: 'epidemicIsTemperature',
+                    title: '站内体温检测台账是否正确填写',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(epidemicIsTemperatureDatas, value);
+                    }
+                },
+                {
+                    field: 'epidemicIsCard',
+                    title: '车辆消毒通风台账是否正确填写',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(epidemicIsCardDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue8',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation8',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'minuteIsCircuit',
+                    title: '站长、副站长是否熟练掌握“三站联动”处置流程',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(minuteIsCircuitDatas, value);
+                    }
+                },
+                {
+                    field: 'minuteIsEquipment',
+                    title: '是否熟练掌握警棍、盾牌等警用装备',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(minuteIsEquipmentDatas, value);
+                    }
+                },
+                {
+                    field: 'minuteIsHandle',
+                    title: '处置小组是否紧密配合、快速处置',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(minuteIsHandleDatas, value);
+                    }
+                },
+                {
+                    field: 'minuteIsSpecification',
+                    title: '现场处置是否符合规范',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(minuteIsSpecificationDatas, value);
+                    }
+                },
+                {
+                    field: 'minuteIsComplete',
+                    title: '执法仪等装备携带是否齐全',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(minuteIsCompleteDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue9',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation9',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'basisIsJoin',
+                    title: '值班交接台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsJoinDatas, value);
+                    }
+                },
+                {
+                    field: 'basisIsIntact',
+                    title: '盘查台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsIntactDatas, value);
+                    }
+                },
+                {
+                    field: 'basisIsVideo',
+                    title: '视频巡控调度台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsVideoDatas, value);
+                    }
+                },
+                {
+                    field: 'basisIsCheck',
+                    title: '单位场所检查台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsCheckDatas, value);
+                    }
+                },
+                {
+                    field: 'basisIsLedger',
+                    title: '“十户联防”演练台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsLedgerDatas, value);
+                    }
+                },
+                {
+                    field: 'basisIsAlarm',
+                    title: '一键式报警器测试台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsAlarmDatas, value);
+                    }
+                },
+                {
+                    field: 'basisIsTest',
+                    title: '站内一键式报警器测试台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsTestDatas, value);
+                    }
+                },
+                {
+                    field: 'basisIsCall',
+                    title: '三方通话测试台账是否填写完整',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabels(basisIsCallDatas, value);
+                    }
+                },
+                {
+                    field: 'existIssue10',
+                    title: '存在问题'
+                },
+                {
+                    field: 'implementSituation10',
+                    title: '整改落实情况'
+                },
+                {
+                    field: 'writeTime',
+                    title: '填写时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('便民警务站工作开展记录')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-detailed-edit" th:object="${sysWorkDetailed}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">在岗辅警（人数）：</label>
+                <div class="col-sm-8">
+                    <input name="jobNumber" th:field="*{jobNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">值班站长（姓名）：</label>
+                <div class="col-sm-8">
+                    <input name="userName" th:field="*{userName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">值班人员是否在岗在位：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="isJob" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.isJob.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">值班人员是否存在脱岗：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="isNotJob" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.isNotJob.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">在岗人员是否与值班表一致：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="isIdentical" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.isIdentical.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue" class="form-control">[[*{existIssue}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation" class="form-control">[[*{implementSituation}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">装备及桌面物品摆放是否整齐：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="goodsIsTidy" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.goodsIsTidy.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备勤室床铺、被褥是否整齐干净：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="beddingIsTidy" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.beddingIsTidy.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">厨房碗筷摆放、储物柜整洁度是否达标：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="tablewareIsTidy" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.tablewareIsTidy.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">便民警务站周边卫生是否达标：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="healthIsStandard" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.healthIsStandard.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">便民警务站内部是否存在卫生死角：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="healthIsBlind" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.healthIsBlind.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue1" class="form-control">[[*{existIssue1}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation1" class="form-control">[[*{implementSituation1}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">值班人员着装是否规范：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="clothesIsStandard" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.clothesIsStandard.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">民辅警是否存在留指甲、染头发等情况：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="nailsIsStandard" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.nailsIsStandard.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue2" class="form-control">[[*{existIssue2}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation2" class="form-control">[[*{implementSituation2}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">巡逻车整体卫生情况是否达标：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="cardIsHealth" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.cardIsHealth.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">巡逻车是否按照要求配备灭火器、阻车钉等必要装备：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="cardIsEquipment" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.cardIsEquipment.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">巡逻车车况是否良好：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="cardIsSituation" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.cardIsSituation.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">巡逻车是否存在损坏未修理的地方：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="cardIsRepair" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.cardIsRepair.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue3" class="form-control">[[*{existIssue3}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation3" class="form-control">[[*{implementSituation3}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">视频会议室卫生及桌面摆放是否合格：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="videoIsHealth" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.videoIsHealth.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">视频会议室值班人员是否在岗在位：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="videoIsJob" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.videoIsJob.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">视频会议室是否存在将手机带入情况：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="videoIsPhone" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.videoIsPhone.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">视频会议室着装是否规范：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="videoIsBedding" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.videoIsBedding.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">视频会议室带班领导汇报情况是否达标：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="videoIsLeader" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.videoIsLeader.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue4" class="form-control">[[*{existIssue4}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation4" class="form-control">[[*{implementSituation4}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否严格落实每日召开晨会：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="meetingIsMeeting" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.meetingIsMeeting.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">晨会是否传达近期重要工作安排：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="meetingIsJob" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.meetingIsJob.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">晨会记录是否详实、无造假情况：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="meetingIsFake" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.meetingIsFake.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否学习国家通用语言：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="meetingIsLanguage" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.meetingIsLanguage.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否落实学习会议及文件：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="meetingIsFile" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.meetingIsFile.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue5" class="form-control">[[*{existIssue5}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation5" class="form-control">[[*{implementSituation5}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否制定符合本站实际的推进表：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="allIsAdvance" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.allIsAdvance.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">站长是否能够熟练掌握授课内容：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="allIsContent" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.allIsContent.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">每日训练日志是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="allIsLog" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.allIsLog.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">民辅警是否对已训练内容掌握熟练：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="allIsGrasp" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.allIsGrasp.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">国语学习是否制定推进计划：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="allIsLanguage" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.allIsLanguage.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">国语学习笔记是否按照推进计划书写：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="allIsWrite" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.allIsWrite.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue6" class="form-control">[[*{existIssue6}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation6" class="form-control">[[*{implementSituation6}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">站长及内勤是否熟练掌握电子台账录入：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="electronIsGrasp" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.electronIsGrasp.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">各类电子台账是否做到及时录入：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="electronIsInput" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.electronIsInput.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">各类电子台账是否存在录入数据错误：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="electronIsError" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.electronIsError.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue11" class="form-control">[[*{existIssue11}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation11" class="form-control">[[*{implementSituation11}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">内勤是否能够较好完成简报情报撰写：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="briefingIsWrite" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.briefingIsWrite.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">简报情报信息是否按照要求进行上报：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="briefingIsSign" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.briefingIsSign.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">本周简报上报情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="briefingIsSituation" class="form-control">[[*{briefingIsSituation}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">情报上报情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="briefingIsIntelligence" class="form-control">[[*{briefingIsIntelligence}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue7" class="form-control">[[*{existIssue7}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation7" class="form-control">[[*{implementSituation7}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">消毒液、洗手液等防疫物资是否齐全：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="epidemicIsSupplies" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.epidemicIsSupplies.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否严格落实进门查验核酸检测卡、健康码、消毒灯制度：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="epidemicIsCode" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.epidemicIsCode.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否熟练掌握消毒液配比比例及方法：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="epidemicIsDisinfection" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.epidemicIsDisinfection.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">消毒台账是否正确填写：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="epidemicIsLedger" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.epidemicIsLedger.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">通风台账是否正确填写：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="epidemicIsVentilation" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.epidemicIsVentilation.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">站内体温检测台账是否正确填写：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="epidemicIsTemperature" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.epidemicIsTemperature.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">车辆消毒通风台账是否正确填写：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="epidemicIsCard" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.epidemicIsCard.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue8" class="form-control">[[*{existIssue8}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation8" class="form-control">[[*{implementSituation8}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">站长、副站长是否熟练掌握“三站联动”处置流程：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="minuteIsCircuit" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.minuteIsCircuit.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">是否熟练掌握警棍、盾牌等警用装备：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="minuteIsEquipment" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.minuteIsEquipment.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">处置小组是否紧密配合、快速处置：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="minuteIsHandle" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.minuteIsHandle.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">现场处置是否符合规范：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="minuteIsSpecification" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.minuteIsSpecification.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">执法仪等装备携带是否齐全：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="minuteIsComplete" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.minuteIsComplete.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue9" class="form-control">[[*{existIssue9}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation9" class="form-control">[[*{implementSituation9}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">值班交接台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsJoin" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsJoin.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">盘查台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsIntact" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsIntact.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">视频巡控调度台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsVideo" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsVideo.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">单位场所检查台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsCheck" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsCheck.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">“十户联防”演练台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsLedger" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsLedger.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">一键式报警器测试台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsAlarm" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsAlarm.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">站内一键式报警器测试台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsTest" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsTest.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">三方通话测试台账是否填写完整：</label>
+                <div class="col-sm-8" th:with="type=${@dict.getType('sys_yes_no')}">
+                    <label th:each="dict : ${type}" class="check-box">
+                        <input name="basisIsCall" type="checkbox" th:value="${dict.dictValue}" th:text="${dict.dictLabel}" th:attr="checked=${sysWorkDetailed.basisIsCall.contains(dict.dictValue)?true:false}">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">存在问题：</label>
+                <div class="col-sm-8">
+                    <textarea name="existIssue10" class="form-control">[[*{existIssue10}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">整改落实情况：</label>
+                <div class="col-sm-8">
+                    <textarea name="implementSituation10" class="form-control">[[*{implementSituation10}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">填写时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="writeTime" th:value="${#dates.format(sysWorkDetailed.writeTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/detailed";
+        $("#form-detailed-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-detailed-edit').serialize());
+            }
+        }
+
+        $("input[name='writeTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysWorkDetailedMapper">
+
+    <resultMap type="SysWorkDetailed" id="SysWorkDetailedResult">
+        <result property="id" column="id"/>
+        <result property="jobNumber" column="job_number"/>
+        <result property="phone" column="phone"/>
+        <result property="userName" column="user_name"/>
+        <result property="isJob" column="is_job"/>
+        <result property="isNotJob" column="is_not_job"/>
+        <result property="isIdentical" column="is_identical"/>
+        <result property="existIssue" column="exist_issue"/>
+        <result property="implementSituation" column="implement_situation"/>
+        <result property="goodsIsTidy" column="goods_is_tidy"/>
+        <result property="beddingIsTidy" column="bedding_is_tidy"/>
+        <result property="tablewareIsTidy" column="tableware_is_tidy"/>
+        <result property="healthIsStandard" column="health_is_standard"/>
+        <result property="healthIsBlind" column="health_is_blind"/>
+        <result property="existIssue1" column="exist_issue_1"/>
+        <result property="implementSituation1" column="implement_situation_1"/>
+        <result property="clothesIsStandard" column="clothes_is_standard"/>
+        <result property="nailsIsStandard" column="nails_is_standard"/>
+        <result property="existIssue2" column="exist_issue_2"/>
+        <result property="implementSituation2" column="implement_situation_2"/>
+        <result property="cardIsHealth" column="card_is_health"/>
+        <result property="cardIsEquipment" column="card_is_equipment"/>
+        <result property="cardIsSituation" column="card_is_situation"/>
+        <result property="cardIsRepair" column="card_is_repair"/>
+        <result property="existIssue3" column="exist_issue_3"/>
+        <result property="implementSituation3" column="implement_situation_3"/>
+        <result property="videoIsHealth" column="video_is_health"/>
+        <result property="videoIsJob" column="video_is_job"/>
+        <result property="videoIsPhone" column="video_is_phone"/>
+        <result property="videoIsBedding" column="video_is_bedding"/>
+        <result property="videoIsLeader" column="video_is_leader"/>
+        <result property="existIssue4" column="exist_issue_4"/>
+        <result property="implementSituation4" column="implement_situation_4"/>
+        <result property="meetingIsMeeting" column="meeting_is_meeting"/>
+        <result property="meetingIsJob" column="meeting_is_job"/>
+        <result property="meetingIsFake" column="meeting_is_fake"/>
+        <result property="meetingIsLanguage" column="meeting_is_language"/>
+        <result property="meetingIsFile" column="meeting_is_file"/>
+        <result property="existIssue5" column="exist_issue_5"/>
+        <result property="implementSituation5" column="implement_situation_5"/>
+        <result property="allIsAdvance" column="all_is_advance"/>
+        <result property="allIsContent" column="all_is_content"/>
+        <result property="allIsLog" column="all_is_log"/>
+        <result property="allIsGrasp" column="all_is_grasp"/>
+        <result property="allIsLanguage" column="all_is_language"/>
+        <result property="allIsWrite" column="all_is_write"/>
+        <result property="existIssue6" column="exist_issue_6"/>
+        <result property="implementSituation6" column="implement_situation_6"/>
+        <result property="electronIsGrasp" column="electron_is_grasp"/>
+        <result property="electronIsInput" column="electron_is_input"/>
+        <result property="electronIsError" column="electron_is_error"/>
+        <result property="existIssue11" column="exist_issue_11"/>
+        <result property="implementSituation11" column="implement_situation_11"/>
+        <result property="briefingIsWrite" column="briefing_is_write"/>
+        <result property="briefingIsSign" column="briefing_is_sign"/>
+        <result property="briefingIsSituation" column="briefing_is_situation"/>
+        <result property="briefingIsIntelligence" column="briefing_is_intelligence"/>
+        <result property="existIssue7" column="exist_issue_7"/>
+        <result property="implementSituation7" column="implement_situation_7"/>
+        <result property="epidemicIsSupplies" column="epidemic_is_supplies"/>
+        <result property="epidemicIsCode" column="epidemic_is_code"/>
+        <result property="epidemicIsDisinfection" column="epidemic_is_disinfection"/>
+        <result property="epidemicIsLedger" column="epidemic_is_ledger"/>
+        <result property="epidemicIsVentilation" column="epidemic_is_ventilation"/>
+        <result property="epidemicIsTemperature" column="epidemic_is_temperature"/>
+        <result property="epidemicIsCard" column="epidemic_is_card"/>
+        <result property="existIssue8" column="exist_issue_8"/>
+        <result property="implementSituation8" column="implement_situation_8"/>
+        <result property="minuteIsCircuit" column="minute_is_circuit"/>
+        <result property="minuteIsEquipment" column="minute_is_equipment"/>
+        <result property="minuteIsHandle" column="minute_is_handle"/>
+        <result property="minuteIsSpecification" column="minute_is_specification"/>
+        <result property="minuteIsComplete" column="minute_is_complete"/>
+        <result property="existIssue9" column="exist_issue_9"/>
+        <result property="implementSituation9" column="implement_situation_9"/>
+        <result property="basisIsJoin" column="basis_is_join"/>
+        <result property="basisIsIntact" column="basis_is_intact"/>
+        <result property="basisIsVideo" column="basis_is_video"/>
+        <result property="basisIsCheck" column="basis_is_check"/>
+        <result property="basisIsLedger" column="basis_is_ledger"/>
+        <result property="basisIsAlarm" column="basis_is_alarm"/>
+        <result property="basisIsTest" column="basis_is_test"/>
+        <result property="basisIsCall" column="basis_is_call"/>
+        <result property="existIssue10" column="exist_issue_10"/>
+        <result property="implementSituation10" column="implement_situation_10"/>
+        <result property="writeTime" column="write_time"/>
+    </resultMap>
+
+    <sql id="selectSysWorkDetailedVo">
+        select id,phone, job_number, user_name, is_job, is_not_job, is_identical, exist_issue, implement_situation, goods_is_tidy, bedding_is_tidy, tableware_is_tidy, health_is_standard, health_is_blind, exist_issue_1, implement_situation_1, clothes_is_standard, nails_is_standard, exist_issue_2, implement_situation_2, card_is_health, card_is_equipment, card_is_situation, card_is_repair, exist_issue_3, implement_situation_3, video_is_health, video_is_job, video_is_phone, video_is_bedding, video_is_leader, exist_issue_4, implement_situation_4, meeting_is_meeting, meeting_is_job, meeting_is_fake, meeting_is_language, meeting_is_file, exist_issue_5, implement_situation_5, all_is_advance, all_is_content, all_is_log, all_is_grasp, all_is_language, all_is_write, exist_issue_6, implement_situation_6, electron_is_grasp, electron_is_input, electron_is_error, exist_issue_11, implement_situation_11, briefing_is_write, briefing_is_sign, briefing_is_situation, briefing_is_intelligence, exist_issue_7, implement_situation_7, epidemic_is_supplies, epidemic_is_code, epidemic_is_disinfection, epidemic_is_ledger, epidemic_is_ventilation, epidemic_is_temperature, epidemic_is_card, exist_issue_8, implement_situation_8, minute_is_circuit, minute_is_equipment, minute_is_handle, minute_is_specification, minute_is_complete, exist_issue_9, implement_situation_9, basis_is_join, basis_is_intact, basis_is_video, basis_is_check, basis_is_ledger, basis_is_alarm, basis_is_test, basis_is_call, exist_issue_10, implement_situation_10, write_time from sys_work_detailed
+    </sql>
+
+    <select id="selectSysWorkDetailedList" parameterType="SysWorkDetailed" resultMap="SysWorkDetailedResult">
+        <include refid="selectSysWorkDetailedVo"/>
+        <where>
+            <if test="jobNumber != null  and jobNumber != ''">and job_number = #{jobNumber}</if>
+            <if test="userName != null  and userName != ''">and user_name like concat('%', #{userName}, '%')</if>
+            <if test="isJob != null  and isJob != ''">and is_job = #{isJob}</if>
+            <if test="isNotJob != null  and isNotJob != ''">and is_not_job = #{isNotJob}</if>
+            <if test="isIdentical != null  and isIdentical != ''">and is_identical = #{isIdentical}</if>
+            <if test="existIssue != null  and existIssue != ''">and exist_issue = #{existIssue}</if>
+            <if test="implementSituation != null  and implementSituation != ''">and implement_situation =
+                #{implementSituation}
+            </if>
+            <if test="goodsIsTidy != null  and goodsIsTidy != ''">and goods_is_tidy = #{goodsIsTidy}</if>
+            <if test="beddingIsTidy != null  and beddingIsTidy != ''">and bedding_is_tidy = #{beddingIsTidy}</if>
+            <if test="tablewareIsTidy != null  and tablewareIsTidy != ''">and tableware_is_tidy = #{tablewareIsTidy}
+            </if>
+            <if test="healthIsStandard != null  and healthIsStandard != ''">and health_is_standard =
+                #{healthIsStandard}
+            </if>
+            <if test="healthIsBlind != null  and healthIsBlind != ''">and health_is_blind = #{healthIsBlind}</if>
+            <if test="existIssue1 != null  and existIssue1 != ''">and exist_issue_1 = #{existIssue1}</if>
+            <if test="implementSituation1 != null  and implementSituation1 != ''">and implement_situation_1 =
+                #{implementSituation1}
+            </if>
+            <if test="clothesIsStandard != null  and clothesIsStandard != ''">and clothes_is_standard =
+                #{clothesIsStandard}
+            </if>
+            <if test="nailsIsStandard != null  and nailsIsStandard != ''">and nails_is_standard = #{nailsIsStandard}
+            </if>
+            <if test="existIssue2 != null  and existIssue2 != ''">and exist_issue_2 = #{existIssue2}</if>
+            <if test="implementSituation2 != null  and implementSituation2 != ''">and implement_situation_2 =
+                #{implementSituation2}
+            </if>
+            <if test="cardIsHealth != null  and cardIsHealth != ''">and card_is_health = #{cardIsHealth}</if>
+            <if test="cardIsEquipment != null  and cardIsEquipment != ''">and card_is_equipment = #{cardIsEquipment}
+            </if>
+            <if test="cardIsSituation != null  and cardIsSituation != ''">and card_is_situation = #{cardIsSituation}
+            </if>
+            <if test="cardIsRepair != null  and cardIsRepair != ''">and card_is_repair = #{cardIsRepair}</if>
+            <if test="existIssue3 != null  and existIssue3 != ''">and exist_issue_3 = #{existIssue3}</if>
+            <if test="implementSituation3 != null  and implementSituation3 != ''">and implement_situation_3 =
+                #{implementSituation3}
+            </if>
+            <if test="videoIsHealth != null  and videoIsHealth != ''">and video_is_health = #{videoIsHealth}</if>
+            <if test="videoIsJob != null  and videoIsJob != ''">and video_is_job = #{videoIsJob}</if>
+            <if test="videoIsPhone != null  and videoIsPhone != ''">and video_is_phone = #{videoIsPhone}</if>
+            <if test="videoIsBedding != null  and videoIsBedding != ''">and video_is_bedding = #{videoIsBedding}</if>
+            <if test="videoIsLeader != null  and videoIsLeader != ''">and video_is_leader = #{videoIsLeader}</if>
+            <if test="existIssue4 != null  and existIssue4 != ''">and exist_issue_4 = #{existIssue4}</if>
+            <if test="implementSituation4 != null  and implementSituation4 != ''">and implement_situation_4 =
+                #{implementSituation4}
+            </if>
+            <if test="meetingIsMeeting != null  and meetingIsMeeting != ''">and meeting_is_meeting =
+                #{meetingIsMeeting}
+            </if>
+            <if test="meetingIsJob != null  and meetingIsJob != ''">and meeting_is_job = #{meetingIsJob}</if>
+            <if test="meetingIsFake != null  and meetingIsFake != ''">and meeting_is_fake = #{meetingIsFake}</if>
+            <if test="meetingIsLanguage != null  and meetingIsLanguage != ''">and meeting_is_language =
+                #{meetingIsLanguage}
+            </if>
+            <if test="meetingIsFile != null  and meetingIsFile != ''">and meeting_is_file = #{meetingIsFile}</if>
+            <if test="existIssue5 != null  and existIssue5 != ''">and exist_issue_5 = #{existIssue5}</if>
+            <if test="implementSituation5 != null  and implementSituation5 != ''">and implement_situation_5 =
+                #{implementSituation5}
+            </if>
+            <if test="allIsAdvance != null  and allIsAdvance != ''">and all_is_advance = #{allIsAdvance}</if>
+            <if test="allIsContent != null  and allIsContent != ''">and all_is_content = #{allIsContent}</if>
+            <if test="allIsLog != null  and allIsLog != ''">and all_is_log = #{allIsLog}</if>
+            <if test="allIsGrasp != null  and allIsGrasp != ''">and all_is_grasp = #{allIsGrasp}</if>
+            <if test="allIsLanguage != null  and allIsLanguage != ''">and all_is_language = #{allIsLanguage}</if>
+            <if test="allIsWrite != null  and allIsWrite != ''">and all_is_write = #{allIsWrite}</if>
+            <if test="existIssue6 != null  and existIssue6 != ''">and exist_issue_6 = #{existIssue6}</if>
+            <if test="implementSituation6 != null  and implementSituation6 != ''">and implement_situation_6 =
+                #{implementSituation6}
+            </if>
+            <if test="electronIsGrasp != null  and electronIsGrasp != ''">and electron_is_grasp = #{electronIsGrasp}
+            </if>
+            <if test="electronIsInput != null  and electronIsInput != ''">and electron_is_input = #{electronIsInput}
+            </if>
+            <if test="electronIsError != null  and electronIsError != ''">and electron_is_error = #{electronIsError}
+            </if>
+            <if test="existIssue11 != null  and existIssue11 != ''">and exist_issue_11 = #{existIssue11}</if>
+            <if test="implementSituation11 != null  and implementSituation11 != ''">and implement_situation_11 =
+                #{implementSituation11}
+            </if>
+            <if test="briefingIsWrite != null  and briefingIsWrite != ''">and briefing_is_write = #{briefingIsWrite}
+            </if>
+            <if test="briefingIsSign != null  and briefingIsSign != ''">and briefing_is_sign = #{briefingIsSign}</if>
+            <if test="briefingIsSituation != null  and briefingIsSituation != ''">and briefing_is_situation =
+                #{briefingIsSituation}
+            </if>
+            <if test="briefingIsIntelligence != null  and briefingIsIntelligence != ''">and briefing_is_intelligence =
+                #{briefingIsIntelligence}
+            </if>
+            <if test="existIssue7 != null  and existIssue7 != ''">and exist_issue_7 = #{existIssue7}</if>
+            <if test="implementSituation7 != null  and implementSituation7 != ''">and implement_situation_7 =
+                #{implementSituation7}
+            </if>
+            <if test="epidemicIsSupplies != null  and epidemicIsSupplies != ''">and epidemic_is_supplies =
+                #{epidemicIsSupplies}
+            </if>
+            <if test="epidemicIsCode != null  and epidemicIsCode != ''">and epidemic_is_code = #{epidemicIsCode}</if>
+            <if test="epidemicIsDisinfection != null  and epidemicIsDisinfection != ''">and epidemic_is_disinfection =
+                #{epidemicIsDisinfection}
+            </if>
+            <if test="epidemicIsLedger != null  and epidemicIsLedger != ''">and epidemic_is_ledger =
+                #{epidemicIsLedger}
+            </if>
+            <if test="epidemicIsVentilation != null  and epidemicIsVentilation != ''">and epidemic_is_ventilation =
+                #{epidemicIsVentilation}
+            </if>
+            <if test="epidemicIsTemperature != null  and epidemicIsTemperature != ''">and epidemic_is_temperature =
+                #{epidemicIsTemperature}
+            </if>
+            <if test="epidemicIsCard != null  and epidemicIsCard != ''">and epidemic_is_card = #{epidemicIsCard}</if>
+            <if test="existIssue8 != null  and existIssue8 != ''">and exist_issue_8 = #{existIssue8}</if>
+            <if test="implementSituation8 != null  and implementSituation8 != ''">and implement_situation_8 =
+                #{implementSituation8}
+            </if>
+            <if test="minuteIsCircuit != null  and minuteIsCircuit != ''">and minute_is_circuit = #{minuteIsCircuit}
+            </if>
+            <if test="minuteIsEquipment != null  and minuteIsEquipment != ''">and minute_is_equipment =
+                #{minuteIsEquipment}
+            </if>
+            <if test="minuteIsHandle != null  and minuteIsHandle != ''">and minute_is_handle = #{minuteIsHandle}</if>
+            <if test="minuteIsSpecification != null  and minuteIsSpecification != ''">and minute_is_specification =
+                #{minuteIsSpecification}
+            </if>
+            <if test="minuteIsComplete != null  and minuteIsComplete != ''">and minute_is_complete =
+                #{minuteIsComplete}
+            </if>
+            <if test="existIssue9 != null  and existIssue9 != ''">and exist_issue_9 = #{existIssue9}</if>
+            <if test="implementSituation9 != null  and implementSituation9 != ''">and implement_situation_9 =
+                #{implementSituation9}
+            </if>
+            <if test="basisIsJoin != null  and basisIsJoin != ''">and basis_is_join = #{basisIsJoin}</if>
+            <if test="basisIsIntact != null  and basisIsIntact != ''">and basis_is_intact = #{basisIsIntact}</if>
+            <if test="basisIsVideo != null  and basisIsVideo != ''">and basis_is_video = #{basisIsVideo}</if>
+            <if test="basisIsCheck != null  and basisIsCheck != ''">and basis_is_check = #{basisIsCheck}</if>
+            <if test="basisIsLedger != null  and basisIsLedger != ''">and basis_is_ledger = #{basisIsLedger}</if>
+            <if test="basisIsAlarm != null  and basisIsAlarm != ''">and basis_is_alarm = #{basisIsAlarm}</if>
+            <if test="basisIsTest != null  and basisIsTest != ''">and basis_is_test = #{basisIsTest}</if>
+            <if test="basisIsCall != null  and basisIsCall != ''">and basis_is_call = #{basisIsCall}</if>
+            <if test="existIssue10 != null  and existIssue10 != ''">and exist_issue_10 = #{existIssue10}</if>
+            <if test="implementSituation10 != null  and implementSituation10 != ''">and implement_situation_10 =
+                #{implementSituation10}
+            </if>
+            <if test="writeTime != null ">and write_time = #{writeTime}</if>
+        </where>
+    </select>
+
+    <select id="selectSysWorkDetailedById" parameterType="Long" resultMap="SysWorkDetailedResult">
+        <include refid="selectSysWorkDetailedVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSysWorkDetailed" parameterType="SysWorkDetailed" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_work_detailed
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jobNumber != null">job_number,</if>
+            <if test="phone != null">phone,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="isJob != null">is_job,</if>
+            <if test="isNotJob != null">is_not_job,</if>
+            <if test="isIdentical != null">is_identical,</if>
+            <if test="existIssue != null">exist_issue,</if>
+            <if test="implementSituation != null">implement_situation,</if>
+            <if test="goodsIsTidy != null">goods_is_tidy,</if>
+            <if test="beddingIsTidy != null">bedding_is_tidy,</if>
+            <if test="tablewareIsTidy != null">tableware_is_tidy,</if>
+            <if test="healthIsStandard != null">health_is_standard,</if>
+            <if test="healthIsBlind != null">health_is_blind,</if>
+            <if test="existIssue1 != null">exist_issue_1,</if>
+            <if test="implementSituation1 != null">implement_situation_1,</if>
+            <if test="clothesIsStandard != null">clothes_is_standard,</if>
+            <if test="nailsIsStandard != null">nails_is_standard,</if>
+            <if test="existIssue2 != null">exist_issue_2,</if>
+            <if test="implementSituation2 != null">implement_situation_2,</if>
+            <if test="cardIsHealth != null">card_is_health,</if>
+            <if test="cardIsEquipment != null">card_is_equipment,</if>
+            <if test="cardIsSituation != null">card_is_situation,</if>
+            <if test="cardIsRepair != null">card_is_repair,</if>
+            <if test="existIssue3 != null">exist_issue_3,</if>
+            <if test="implementSituation3 != null">implement_situation_3,</if>
+            <if test="videoIsHealth != null">video_is_health,</if>
+            <if test="videoIsJob != null">video_is_job,</if>
+            <if test="videoIsPhone != null">video_is_phone,</if>
+            <if test="videoIsBedding != null">video_is_bedding,</if>
+            <if test="videoIsLeader != null">video_is_leader,</if>
+            <if test="existIssue4 != null">exist_issue_4,</if>
+            <if test="implementSituation4 != null">implement_situation_4,</if>
+            <if test="meetingIsMeeting != null">meeting_is_meeting,</if>
+            <if test="meetingIsJob != null">meeting_is_job,</if>
+            <if test="meetingIsFake != null">meeting_is_fake,</if>
+            <if test="meetingIsLanguage != null">meeting_is_language,</if>
+            <if test="meetingIsFile != null">meeting_is_file,</if>
+            <if test="existIssue5 != null">exist_issue_5,</if>
+            <if test="implementSituation5 != null">implement_situation_5,</if>
+            <if test="allIsAdvance != null">all_is_advance,</if>
+            <if test="allIsContent != null">all_is_content,</if>
+            <if test="allIsLog != null">all_is_log,</if>
+            <if test="allIsGrasp != null">all_is_grasp,</if>
+            <if test="allIsLanguage != null">all_is_language,</if>
+            <if test="allIsWrite != null">all_is_write,</if>
+            <if test="existIssue6 != null">exist_issue_6,</if>
+            <if test="implementSituation6 != null">implement_situation_6,</if>
+            <if test="electronIsGrasp != null">electron_is_grasp,</if>
+            <if test="electronIsInput != null">electron_is_input,</if>
+            <if test="electronIsError != null">electron_is_error,</if>
+            <if test="existIssue11 != null">exist_issue_11,</if>
+            <if test="implementSituation11 != null">implement_situation_11,</if>
+            <if test="briefingIsWrite != null">briefing_is_write,</if>
+            <if test="briefingIsSign != null">briefing_is_sign,</if>
+            <if test="briefingIsSituation != null">briefing_is_situation,</if>
+            <if test="briefingIsIntelligence != null">briefing_is_intelligence,</if>
+            <if test="existIssue7 != null">exist_issue_7,</if>
+            <if test="implementSituation7 != null">implement_situation_7,</if>
+            <if test="epidemicIsSupplies != null">epidemic_is_supplies,</if>
+            <if test="epidemicIsCode != null">epidemic_is_code,</if>
+            <if test="epidemicIsDisinfection != null">epidemic_is_disinfection,</if>
+            <if test="epidemicIsLedger != null">epidemic_is_ledger,</if>
+            <if test="epidemicIsVentilation != null">epidemic_is_ventilation,</if>
+            <if test="epidemicIsTemperature != null">epidemic_is_temperature,</if>
+            <if test="epidemicIsCard != null">epidemic_is_card,</if>
+            <if test="existIssue8 != null">exist_issue_8,</if>
+            <if test="implementSituation8 != null">implement_situation_8,</if>
+            <if test="minuteIsCircuit != null">minute_is_circuit,</if>
+            <if test="minuteIsEquipment != null">minute_is_equipment,</if>
+            <if test="minuteIsHandle != null">minute_is_handle,</if>
+            <if test="minuteIsSpecification != null">minute_is_specification,</if>
+            <if test="minuteIsComplete != null">minute_is_complete,</if>
+            <if test="existIssue9 != null">exist_issue_9,</if>
+            <if test="implementSituation9 != null">implement_situation_9,</if>
+            <if test="basisIsJoin != null">basis_is_join,</if>
+            <if test="basisIsIntact != null">basis_is_intact,</if>
+            <if test="basisIsVideo != null">basis_is_video,</if>
+            <if test="basisIsCheck != null">basis_is_check,</if>
+            <if test="basisIsLedger != null">basis_is_ledger,</if>
+            <if test="basisIsAlarm != null">basis_is_alarm,</if>
+            <if test="basisIsTest != null">basis_is_test,</if>
+            <if test="basisIsCall != null">basis_is_call,</if>
+            <if test="existIssue10 != null">exist_issue_10,</if>
+            <if test="implementSituation10 != null">implement_situation_10,</if>
+            <if test="writeTime != null">write_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jobNumber != null">#{jobNumber},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="isJob != null">#{isJob},</if>
+            <if test="isNotJob != null">#{isNotJob},</if>
+            <if test="isIdentical != null">#{isIdentical},</if>
+            <if test="existIssue != null">#{existIssue},</if>
+            <if test="implementSituation != null">#{implementSituation},</if>
+            <if test="goodsIsTidy != null">#{goodsIsTidy},</if>
+            <if test="beddingIsTidy != null">#{beddingIsTidy},</if>
+            <if test="tablewareIsTidy != null">#{tablewareIsTidy},</if>
+            <if test="healthIsStandard != null">#{healthIsStandard},</if>
+            <if test="healthIsBlind != null">#{healthIsBlind},</if>
+            <if test="existIssue1 != null">#{existIssue1},</if>
+            <if test="implementSituation1 != null">#{implementSituation1},</if>
+            <if test="clothesIsStandard != null">#{clothesIsStandard},</if>
+            <if test="nailsIsStandard != null">#{nailsIsStandard},</if>
+            <if test="existIssue2 != null">#{existIssue2},</if>
+            <if test="implementSituation2 != null">#{implementSituation2},</if>
+            <if test="cardIsHealth != null">#{cardIsHealth},</if>
+            <if test="cardIsEquipment != null">#{cardIsEquipment},</if>
+            <if test="cardIsSituation != null">#{cardIsSituation},</if>
+            <if test="cardIsRepair != null">#{cardIsRepair},</if>
+            <if test="existIssue3 != null">#{existIssue3},</if>
+            <if test="implementSituation3 != null">#{implementSituation3},</if>
+            <if test="videoIsHealth != null">#{videoIsHealth},</if>
+            <if test="videoIsJob != null">#{videoIsJob},</if>
+            <if test="videoIsPhone != null">#{videoIsPhone},</if>
+            <if test="videoIsBedding != null">#{videoIsBedding},</if>
+            <if test="videoIsLeader != null">#{videoIsLeader},</if>
+            <if test="existIssue4 != null">#{existIssue4},</if>
+            <if test="implementSituation4 != null">#{implementSituation4},</if>
+            <if test="meetingIsMeeting != null">#{meetingIsMeeting},</if>
+            <if test="meetingIsJob != null">#{meetingIsJob},</if>
+            <if test="meetingIsFake != null">#{meetingIsFake},</if>
+            <if test="meetingIsLanguage != null">#{meetingIsLanguage},</if>
+            <if test="meetingIsFile != null">#{meetingIsFile},</if>
+            <if test="existIssue5 != null">#{existIssue5},</if>
+            <if test="implementSituation5 != null">#{implementSituation5},</if>
+            <if test="allIsAdvance != null">#{allIsAdvance},</if>
+            <if test="allIsContent != null">#{allIsContent},</if>
+            <if test="allIsLog != null">#{allIsLog},</if>
+            <if test="allIsGrasp != null">#{allIsGrasp},</if>
+            <if test="allIsLanguage != null">#{allIsLanguage},</if>
+            <if test="allIsWrite != null">#{allIsWrite},</if>
+            <if test="existIssue6 != null">#{existIssue6},</if>
+            <if test="implementSituation6 != null">#{implementSituation6},</if>
+            <if test="electronIsGrasp != null">#{electronIsGrasp},</if>
+            <if test="electronIsInput != null">#{electronIsInput},</if>
+            <if test="electronIsError != null">#{electronIsError},</if>
+            <if test="existIssue11 != null">#{existIssue11},</if>
+            <if test="implementSituation11 != null">#{implementSituation11},</if>
+            <if test="briefingIsWrite != null">#{briefingIsWrite},</if>
+            <if test="briefingIsSign != null">#{briefingIsSign},</if>
+            <if test="briefingIsSituation != null">#{briefingIsSituation},</if>
+            <if test="briefingIsIntelligence != null">#{briefingIsIntelligence},</if>
+            <if test="existIssue7 != null">#{existIssue7},</if>
+            <if test="implementSituation7 != null">#{implementSituation7},</if>
+            <if test="epidemicIsSupplies != null">#{epidemicIsSupplies},</if>
+            <if test="epidemicIsCode != null">#{epidemicIsCode},</if>
+            <if test="epidemicIsDisinfection != null">#{epidemicIsDisinfection},</if>
+            <if test="epidemicIsLedger != null">#{epidemicIsLedger},</if>
+            <if test="epidemicIsVentilation != null">#{epidemicIsVentilation},</if>
+            <if test="epidemicIsTemperature != null">#{epidemicIsTemperature},</if>
+            <if test="epidemicIsCard != null">#{epidemicIsCard},</if>
+            <if test="existIssue8 != null">#{existIssue8},</if>
+            <if test="implementSituation8 != null">#{implementSituation8},</if>
+            <if test="minuteIsCircuit != null">#{minuteIsCircuit},</if>
+            <if test="minuteIsEquipment != null">#{minuteIsEquipment},</if>
+            <if test="minuteIsHandle != null">#{minuteIsHandle},</if>
+            <if test="minuteIsSpecification != null">#{minuteIsSpecification},</if>
+            <if test="minuteIsComplete != null">#{minuteIsComplete},</if>
+            <if test="existIssue9 != null">#{existIssue9},</if>
+            <if test="implementSituation9 != null">#{implementSituation9},</if>
+            <if test="basisIsJoin != null">#{basisIsJoin},</if>
+            <if test="basisIsIntact != null">#{basisIsIntact},</if>
+            <if test="basisIsVideo != null">#{basisIsVideo},</if>
+            <if test="basisIsCheck != null">#{basisIsCheck},</if>
+            <if test="basisIsLedger != null">#{basisIsLedger},</if>
+            <if test="basisIsAlarm != null">#{basisIsAlarm},</if>
+            <if test="basisIsTest != null">#{basisIsTest},</if>
+            <if test="basisIsCall != null">#{basisIsCall},</if>
+            <if test="existIssue10 != null">#{existIssue10},</if>
+            <if test="implementSituation10 != null">#{implementSituation10},</if>
+            <if test="writeTime != null">#{writeTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSysWorkDetailed" parameterType="SysWorkDetailed">
+        update sys_work_detailed
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jobNumber != null">job_number = #{jobNumber},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="isJob != null">is_job = #{isJob},</if>
+            <if test="isNotJob != null">is_not_job = #{isNotJob},</if>
+            <if test="isIdentical != null">is_identical = #{isIdentical},</if>
+            <if test="existIssue != null">exist_issue = #{existIssue},</if>
+            <if test="implementSituation != null">implement_situation = #{implementSituation},</if>
+            <if test="goodsIsTidy != null">goods_is_tidy = #{goodsIsTidy},</if>
+            <if test="beddingIsTidy != null">bedding_is_tidy = #{beddingIsTidy},</if>
+            <if test="tablewareIsTidy != null">tableware_is_tidy = #{tablewareIsTidy},</if>
+            <if test="healthIsStandard != null">health_is_standard = #{healthIsStandard},</if>
+            <if test="healthIsBlind != null">health_is_blind = #{healthIsBlind},</if>
+            <if test="existIssue1 != null">exist_issue_1 = #{existIssue1},</if>
+            <if test="implementSituation1 != null">implement_situation_1 = #{implementSituation1},</if>
+            <if test="clothesIsStandard != null">clothes_is_standard = #{clothesIsStandard},</if>
+            <if test="nailsIsStandard != null">nails_is_standard = #{nailsIsStandard},</if>
+            <if test="existIssue2 != null">exist_issue_2 = #{existIssue2},</if>
+            <if test="implementSituation2 != null">implement_situation_2 = #{implementSituation2},</if>
+            <if test="cardIsHealth != null">card_is_health = #{cardIsHealth},</if>
+            <if test="cardIsEquipment != null">card_is_equipment = #{cardIsEquipment},</if>
+            <if test="cardIsSituation != null">card_is_situation = #{cardIsSituation},</if>
+            <if test="cardIsRepair != null">card_is_repair = #{cardIsRepair},</if>
+            <if test="existIssue3 != null">exist_issue_3 = #{existIssue3},</if>
+            <if test="implementSituation3 != null">implement_situation_3 = #{implementSituation3},</if>
+            <if test="videoIsHealth != null">video_is_health = #{videoIsHealth},</if>
+            <if test="videoIsJob != null">video_is_job = #{videoIsJob},</if>
+            <if test="videoIsPhone != null">video_is_phone = #{videoIsPhone},</if>
+            <if test="videoIsBedding != null">video_is_bedding = #{videoIsBedding},</if>
+            <if test="videoIsLeader != null">video_is_leader = #{videoIsLeader},</if>
+            <if test="existIssue4 != null">exist_issue_4 = #{existIssue4},</if>
+            <if test="implementSituation4 != null">implement_situation_4 = #{implementSituation4},</if>
+            <if test="meetingIsMeeting != null">meeting_is_meeting = #{meetingIsMeeting},</if>
+            <if test="meetingIsJob != null">meeting_is_job = #{meetingIsJob},</if>
+            <if test="meetingIsFake != null">meeting_is_fake = #{meetingIsFake},</if>
+            <if test="meetingIsLanguage != null">meeting_is_language = #{meetingIsLanguage},</if>
+            <if test="meetingIsFile != null">meeting_is_file = #{meetingIsFile},</if>
+            <if test="existIssue5 != null">exist_issue_5 = #{existIssue5},</if>
+            <if test="implementSituation5 != null">implement_situation_5 = #{implementSituation5},</if>
+            <if test="allIsAdvance != null">all_is_advance = #{allIsAdvance},</if>
+            <if test="allIsContent != null">all_is_content = #{allIsContent},</if>
+            <if test="allIsLog != null">all_is_log = #{allIsLog},</if>
+            <if test="allIsGrasp != null">all_is_grasp = #{allIsGrasp},</if>
+            <if test="allIsLanguage != null">all_is_language = #{allIsLanguage},</if>
+            <if test="allIsWrite != null">all_is_write = #{allIsWrite},</if>
+            <if test="existIssue6 != null">exist_issue_6 = #{existIssue6},</if>
+            <if test="implementSituation6 != null">implement_situation_6 = #{implementSituation6},</if>
+            <if test="electronIsGrasp != null">electron_is_grasp = #{electronIsGrasp},</if>
+            <if test="electronIsInput != null">electron_is_input = #{electronIsInput},</if>
+            <if test="electronIsError != null">electron_is_error = #{electronIsError},</if>
+            <if test="existIssue11 != null">exist_issue_11 = #{existIssue11},</if>
+            <if test="implementSituation11 != null">implement_situation_11 = #{implementSituation11},</if>
+            <if test="briefingIsWrite != null">briefing_is_write = #{briefingIsWrite},</if>
+            <if test="briefingIsSign != null">briefing_is_sign = #{briefingIsSign},</if>
+            <if test="briefingIsSituation != null">briefing_is_situation = #{briefingIsSituation},</if>
+            <if test="briefingIsIntelligence != null">briefing_is_intelligence = #{briefingIsIntelligence},</if>
+            <if test="existIssue7 != null">exist_issue_7 = #{existIssue7},</if>
+            <if test="implementSituation7 != null">implement_situation_7 = #{implementSituation7},</if>
+            <if test="epidemicIsSupplies != null">epidemic_is_supplies = #{epidemicIsSupplies},</if>
+            <if test="epidemicIsCode != null">epidemic_is_code = #{epidemicIsCode},</if>
+            <if test="epidemicIsDisinfection != null">epidemic_is_disinfection = #{epidemicIsDisinfection},</if>
+            <if test="epidemicIsLedger != null">epidemic_is_ledger = #{epidemicIsLedger},</if>
+            <if test="epidemicIsVentilation != null">epidemic_is_ventilation = #{epidemicIsVentilation},</if>
+            <if test="epidemicIsTemperature != null">epidemic_is_temperature = #{epidemicIsTemperature},</if>
+            <if test="epidemicIsCard != null">epidemic_is_card = #{epidemicIsCard},</if>
+            <if test="existIssue8 != null">exist_issue_8 = #{existIssue8},</if>
+            <if test="implementSituation8 != null">implement_situation_8 = #{implementSituation8},</if>
+            <if test="minuteIsCircuit != null">minute_is_circuit = #{minuteIsCircuit},</if>
+            <if test="minuteIsEquipment != null">minute_is_equipment = #{minuteIsEquipment},</if>
+            <if test="minuteIsHandle != null">minute_is_handle = #{minuteIsHandle},</if>
+            <if test="minuteIsSpecification != null">minute_is_specification = #{minuteIsSpecification},</if>
+            <if test="minuteIsComplete != null">minute_is_complete = #{minuteIsComplete},</if>
+            <if test="existIssue9 != null">exist_issue_9 = #{existIssue9},</if>
+            <if test="implementSituation9 != null">implement_situation_9 = #{implementSituation9},</if>
+            <if test="basisIsJoin != null">basis_is_join = #{basisIsJoin},</if>
+            <if test="basisIsIntact != null">basis_is_intact = #{basisIsIntact},</if>
+            <if test="basisIsVideo != null">basis_is_video = #{basisIsVideo},</if>
+            <if test="basisIsCheck != null">basis_is_check = #{basisIsCheck},</if>
+            <if test="basisIsLedger != null">basis_is_ledger = #{basisIsLedger},</if>
+            <if test="basisIsAlarm != null">basis_is_alarm = #{basisIsAlarm},</if>
+            <if test="basisIsTest != null">basis_is_test = #{basisIsTest},</if>
+            <if test="basisIsCall != null">basis_is_call = #{basisIsCall},</if>
+            <if test="existIssue10 != null">exist_issue_10 = #{existIssue10},</if>
+            <if test="implementSituation10 != null">implement_situation_10 = #{implementSituation10},</if>
+            <if test="writeTime != null">write_time = #{writeTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysWorkDetailedById" parameterType="Long">
+        delete from sys_work_detailed where id = #{id}
+    </delete>
+
+    <delete id="deleteSysWorkDetailedByIds" parameterType="String">
+        delete from sys_work_detailed where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
