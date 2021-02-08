@@ -72,7 +72,6 @@ public class SysWorkDetailedController extends BaseController {
     /**
      * 新增保存每日工作填写
      */
-    @RequiresPermissions("system:detailed:add")
     @Log(title = "每日工作填写", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
