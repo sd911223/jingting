@@ -8,6 +8,8 @@
         <result property="id" column="id"/>
         <result property="jobNumber" column="job_number"/>
         <result property="phone" column="phone"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="agencyName" column="agency_name"/>
         <result property="userName" column="user_name"/>
         <result property="isJob" column="is_job"/>
         <result property="isNotJob" column="is_not_job"/>
@@ -101,6 +103,9 @@
         <include refid="selectSysWorkDetailedVo"/>
         <where>
             <if test="jobNumber != null  and jobNumber != ''">and job_number = #{jobNumber}</if>
+            <if test="phone != null  and phone != ''">and phone = #{phone}</if>
+            <if test="imgUrl != null  and imgUrl != ''">and img_url = #{imgUrl}</if>
+            <if test="agencyName != null  and agencyName != ''">and agency_name = #{agencyName}</if>
             <if test="userName != null  and userName != ''">and user_name like concat('%', #{userName}, '%')</if>
             <if test="isJob != null  and isJob != ''">and is_job = #{isJob}</if>
             <if test="isNotJob != null  and isNotJob != ''">and is_not_job = #{isNotJob}</if>
@@ -258,6 +263,8 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="jobNumber != null">job_number,</if>
             <if test="phone != null">phone,</if>
+            <if test="imgUrl != null">img_url,</if>
+            <if test="agencyName != null">agency_name,</if>
             <if test="userName != null">user_name,</if>
             <if test="isJob != null">is_job,</if>
             <if test="isNotJob != null">is_not_job,</if>
@@ -345,6 +352,8 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="jobNumber != null">#{jobNumber},</if>
             <if test="phone != null">#{phone},</if>
+            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="agencyName != null">#{agencyName},</if>
             <if test="userName != null">#{userName},</if>
             <if test="isJob != null">#{isJob},</if>
             <if test="isNotJob != null">#{isNotJob},</if>

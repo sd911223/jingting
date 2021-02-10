@@ -25,6 +25,19 @@ public class SysWorkDetailed extends BaseEntity {
      * 手机号
      */
     private String phone;
+
+
+    /**
+     * 图片url
+     */
+    private String imgUrl;
+
+
+    /**
+     * 机构名称
+     */
+    private String agencyName;
+
     /**
      * 在岗辅警（人数）
      */
@@ -529,6 +542,22 @@ public class SysWorkDetailed extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "填写时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date writeTime;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public String getAgencyName() {
+        return agencyName;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
+    }
 
     public String getPhone() {
         return phone;

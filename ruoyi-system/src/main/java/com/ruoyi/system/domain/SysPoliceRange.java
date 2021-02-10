@@ -5,8 +5,6 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.math.BigDecimal;
-
 /**
  * 位置检测对象 sys_police_range
  *
@@ -26,6 +24,18 @@ public class SysPoliceRange extends BaseEntity {
      */
     @Excel(name = "手机号")
     private String phone;
+
+    /**
+     * 姓名
+     */
+    @Excel(name = "姓名")
+    private String userName;
+
+    /**
+     * 机构名称
+     */
+    @Excel(name = "机构名称")
+    private String agencyName;
 
     /**
      * 距离范围
@@ -53,6 +63,22 @@ public class SysPoliceRange extends BaseEntity {
      * 纬度
      */
     private Double latitude;
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getAgencyName() {
+        return agencyName;
+    }
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;

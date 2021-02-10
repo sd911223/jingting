@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.utils.MapUtils;
 import com.ruoyi.system.domain.SysPoliceBooth;
 import com.ruoyi.system.domain.SysPoliceRange;
@@ -63,13 +64,14 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
      */
     @Override
     public int insertSysPoliceRange(SysPoliceRange sysPoliceRange) {
-
         log.info("上报位置,手机号{},经度:{},纬度:{}", sysPoliceRange.getPhone(), sysPoliceRange.getLongitude(), sysPoliceRange.getLatitude());
         SysPoliceBooth sysPoliceBooth = new SysPoliceBooth();
         sysPoliceBooth.setPhone(sysPoliceRange.getPhone());
         List<SysPoliceBooth> boothList = sysPoliceBoothMapper.selectSysPoliceBoothList(sysPoliceBooth);
         if (!boothList.isEmpty()) {
             SysPoliceBooth policeBooth = boothList.get(0);
+            sysPoliceRange.setAgencyName(policeBooth.getPoliceBoothName());
+            sysPoliceRange.setUserName(policeBooth.getName());
             log.info("设置区域,手机号{},经度:{},纬度:{}", policeBooth.getPhone(), policeBooth.getLongitude(), policeBooth.getLatitude());
             double getDistance = MapUtils.GetDistance(sysPoliceRange.getLatitude(), sysPoliceRange.getLongitude(), policeBooth.getLatitude(), policeBooth.getLongitude());
             BigDecimal b = new BigDecimal(getDistance);
@@ -80,12 +82,14 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
                 sysPoliceRange.setIsDistance("否");
             } else {
                 sysPoliceRange.setIsDistance("是");
+                return sysPoliceRangeMapper.insertSysPoliceRange(sysPoliceRange);
             }
         } else {
-
+            log.info("根据手机号查询不到机构信息,手机号->{}", sysPoliceRange.getPhone());
+            throw new BusinessException("根据手机号查询不到机构信息:" + sysPoliceRange.getPhone());
         }
 
-        return sysPoliceRangeMapper.insertSysPoliceRange(sysPoliceRange);
+        return 1;
     }
 
     /**

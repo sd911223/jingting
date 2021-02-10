@@ -274,8 +274,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/system/range/add", "anon");
         //添加工作任务
         filterChainDefinitionMap.put("/system/detailed/add", "anon");
+
         //工作任务详情
         filterChainDefinitionMap.put("/system/detailed/edit/**", "anon,captchaValidate");
+        //上传
+        filterChainDefinitionMap.put("/common/upload", "anon");
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         filters.put("onlineSession", onlineSessionFilter());

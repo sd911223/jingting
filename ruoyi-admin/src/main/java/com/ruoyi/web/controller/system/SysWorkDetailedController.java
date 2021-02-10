@@ -75,7 +75,7 @@ public class SysWorkDetailedController extends BaseController {
     @Log(title = "每日工作填写", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(SysWorkDetailed sysWorkDetailed) {
+    public AjaxResult addSave(@RequestBody SysWorkDetailed sysWorkDetailed) {
         return toAjax(sysWorkDetailedService.insertSysWorkDetailed(sysWorkDetailed));
     }
 

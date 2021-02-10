@@ -87,7 +87,10 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
         sysWorkDetailed1.setWriteTime(dateTime1);
         List<SysWorkDetailed> sysWorkDetaileds = sysWorkDetailedMapper.selectSysWorkDetailedList(sysWorkDetailed1);
         if (!sysWorkDetaileds.isEmpty()) {
-            sysWorkDetailedMapper.updateSysWorkDetailed(sysWorkDetaileds.get(0));
+            log.info("=============================进入修改工作日志==========================");
+            SysWorkDetailed sysWorkDetailed2 = sysWorkDetaileds.get(0);
+            sysWorkDetailed.setId(sysWorkDetailed2.getId());
+            sysWorkDetailedMapper.updateSysWorkDetailed(sysWorkDetailed);
             return 1;
         }
 
