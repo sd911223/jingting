@@ -1,23 +1,21 @@
 package com.ruoyi.web.controller.system;
 
-import java.util.List;
+import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.SysPoliceWork;
+import com.ruoyi.system.service.ISysPoliceWorkService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.SysPoliceWork;
-import com.ruoyi.system.service.ISysPoliceWorkService;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.common.core.page.TableDataInfo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 工作详细Controller
@@ -88,7 +86,19 @@ public class SysPoliceWorkController extends BaseController
     {
         return toAjax(sysPoliceWorkService.insertSysPoliceWork(sysPoliceWork));
     }
-
+    /**
+     * 工作结束
+     */
+    @GetMapping("/finish/{phone}")
+    public AjaxResult edit(@PathVariable("phone") String phone)
+    {
+        SysPoliceWork sysPoliceWork =new SysPoliceWork();
+        sysPoliceWork.setReserved3(phone);
+        List<SysPoliceWork> policeWorkList = sysPoliceWorkService.selectSysPoliceWorkList(sysPoliceWork);
+        SysPoliceWork policeWork = policeWorkList.get(0);
+        policeWork.setReserved2(new Date());
+        return toAjax(sysPoliceWorkService.updateSysPoliceWork(policeWork));
+    }
     /**
      * 修改工作详细
      */

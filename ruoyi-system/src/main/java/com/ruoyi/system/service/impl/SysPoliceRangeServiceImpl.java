@@ -80,9 +80,9 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
             sysPoliceRange.setRangeDistance(doubleValue);
             if (doubleValue > policeBooth.getRangeArea()) {
                 sysPoliceRange.setIsDistance("否");
+                return sysPoliceRangeMapper.insertSysPoliceRange(sysPoliceRange);
             } else {
                 sysPoliceRange.setIsDistance("是");
-                return sysPoliceRangeMapper.insertSysPoliceRange(sysPoliceRange);
             }
         } else {
             log.info("根据手机号查询不到机构信息,手机号->{}", sysPoliceRange.getPhone());

@@ -279,6 +279,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/system/detailed/edit/**", "anon,captchaValidate");
         //上传
         filterChainDefinitionMap.put("/common/upload", "anon");
+        //预览
+        filterChainDefinitionMap.put("/profile/upload/**", "anon");
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         filters.put("onlineSession", onlineSessionFilter());

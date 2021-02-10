@@ -71,10 +71,13 @@ public class CommonController
     @ResponseBody
     public AjaxResult uploadFile(MultipartFile file) throws Exception
     {
+        log.info("=============================进入上传文件====================================");
         try
         {
+
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
+            log.info("=============================上传文件路径===================================={}",file);
             // 上传并返回新文件名称
             String fileName = FileUploadUtils.upload(filePath, file);
             String url = serverConfig.getUrl() + fileName;

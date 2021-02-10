@@ -66,7 +66,7 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
     @Override
     @Transactional
     public int insertSysWorkDetailed(SysWorkDetailed sysWorkDetailed) {
-        log.info("添加工作日志,手机号->{}", sysWorkDetailed.getPhone());
+        log.info("添加工作日志,手机号->{},图片:{}", sysWorkDetailed.getPhone(), sysWorkDetailed.getImgUrl());
         if (sysWorkDetailed.getPhone().equals("")) {
             log.info("添加工作任务异常,手机号->{}", sysWorkDetailed.getPhone());
             throw new BusinessException("添加工作任务异常，手机号：" + sysWorkDetailed.getPhone());
@@ -101,9 +101,43 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
             throw new BusinessException("获取不到工作任务主键ID:,手机号->{}" + sysWorkDetailed.getPhone());
         }
         SysPoliceWork sysPoliceWork = new SysPoliceWork();
+        if (!sysWorkDetailed.getExistIssue1().equals("") ||
+                !sysWorkDetailed.getExistIssue2().equals("") ||
+                !sysWorkDetailed.getExistIssue3().equals("") ||
+                !sysWorkDetailed.getExistIssue4().equals("") ||
+                !sysWorkDetailed.getExistIssue5().equals("") ||
+                !sysWorkDetailed.getExistIssue6().equals("") ||
+                !sysWorkDetailed.getExistIssue7().equals("") ||
+                !sysWorkDetailed.getExistIssue8().equals("") ||
+                !sysWorkDetailed.getExistIssue9().equals("") ||
+                !sysWorkDetailed.getExistIssue10().equals("") ||
+                !sysWorkDetailed.getExistIssue11().equals("")
+        ) {
+            sysPoliceWork.setIsQuestion("是");
+        } else {
+            sysPoliceWork.setIsQuestion("否");
+        }
+        if (!sysWorkDetailed.getImplementSituation().equals("") ||
+                !sysWorkDetailed.getImplementSituation1().equals("") ||
+                !sysWorkDetailed.getImplementSituation2().equals("") ||
+                !sysWorkDetailed.getImplementSituation3().equals("") ||
+                !sysWorkDetailed.getImplementSituation4().equals("") ||
+                !sysWorkDetailed.getImplementSituation5().equals("") ||
+                !sysWorkDetailed.getImplementSituation6().equals("") ||
+                !sysWorkDetailed.getImplementSituation7().equals("") ||
+                !sysWorkDetailed.getImplementSituation8().equals("") ||
+                !sysWorkDetailed.getImplementSituation9().equals("") ||
+                !sysWorkDetailed.getImplementSituation10().equals("") ||
+                !sysWorkDetailed.getImplementSituation11().equals("")) {
+            sysPoliceWork.setIsModify("是");
+        } else {
+            sysPoliceWork.setIsModify("否");
+        }
+        sysPoliceWork.setReserved3(sysWorkDetailed.getPhone());
         sysPoliceWork.setReserved1(sysWorkDetailed.getId());
         sysPoliceWork.setWriteName(policeBooth.getName());
         sysPoliceWork.setAgencyName(policeBooth.getPoliceBoothName());
+        sysPoliceWork.setWriteTime(new Date());
         sysPoliceWorkMapper.insertSysPoliceWork(sysPoliceWork);
         return workDetailed;
     }

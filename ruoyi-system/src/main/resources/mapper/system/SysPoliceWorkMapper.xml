@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SysPoliceWorkMapper">
-    
+
     <resultMap type="SysPoliceWork" id="SysPoliceWorkResult">
         <result property="id"    column="id"    />
         <result property="agencyName"    column="agency_name"    />
         <result property="writeName"    column="write_name"    />
-        <result property="createTime"    column="create_time"    />
+        <result property="writeTime"    column="write_time"    />
         <result property="isQuestion"    column="is_question"    />
         <result property="isModify"    column="is_modify"    />
         <result property="reserved1"    column="reserved_1"    />
@@ -19,35 +19,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectSysPoliceWorkVo">
-        select id, agency_name, write_name, create_time, is_question, is_modify, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5 from sys_police_work
+        select id, agency_name, write_name, write_time, is_question, is_modify, reserved_1, reserved_2, reserved_3, reserved_4, reserved_5 from sys_police_work
     </sql>
 
     <select id="selectSysPoliceWorkList" parameterType="SysPoliceWork" resultMap="SysPoliceWorkResult">
         <include refid="selectSysPoliceWorkVo"/>
-        <where>  
-            <if test="agencyName != null  and agencyName != ''"> and agency_name like concat('%', #{agencyName}, '%')</if>
+        <where>
+            <if test="agencyName != null  and agencyName != ''"> and agency_name = #{agencyName}</if>
             <if test="writeName != null  and writeName != ''"> and write_name like concat('%', #{writeName}, '%')</if>
+            <if test="writeTime != null "> and write_time = #{writeTime}</if>
             <if test="isQuestion != null  and isQuestion != ''"> and is_question = #{isQuestion}</if>
             <if test="isModify != null  and isModify != ''"> and is_modify = #{isModify}</if>
-            <if test="reserved1 != null  and reserved1 != ''"> and reserved_1 = #{reserved1}</if>
-            <if test="reserved2 != null  and reserved2 != ''"> and reserved_2 = #{reserved2}</if>
+            <if test="reserved1 != null "> and reserved_1 = #{reserved1}</if>
+            <if test="reserved2 != null "> and reserved_2 = #{reserved2}</if>
             <if test="reserved3 != null  and reserved3 != ''"> and reserved_3 = #{reserved3}</if>
             <if test="reserved4 != null  and reserved4 != ''"> and reserved_4 = #{reserved4}</if>
             <if test="reserved5 != null  and reserved5 != ''"> and reserved_5 = #{reserved5}</if>
         </where>
+        order by write_time desc
     </select>
-    
+
     <select id="selectSysPoliceWorkById" parameterType="Long" resultMap="SysPoliceWorkResult">
         <include refid="selectSysPoliceWorkVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertSysPoliceWork" parameterType="SysPoliceWork" useGeneratedKeys="true" keyProperty="id">
         insert into sys_police_work
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="agencyName != null">agency_name,</if>
             <if test="writeName != null">write_name,</if>
-
+            <if test="writeTime != null">write_time,</if>
             <if test="isQuestion != null">is_question,</if>
             <if test="isModify != null">is_modify,</if>
             <if test="reserved1 != null">reserved_1,</if>
@@ -55,11 +57,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reserved3 != null">reserved_3,</if>
             <if test="reserved4 != null">reserved_4,</if>
             <if test="reserved5 != null">reserved_5,</if>
-            create_time
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="agencyName != null">#{agencyName},</if>
             <if test="writeName != null">#{writeName},</if>
+            <if test="writeTime != null">#{writeTime},</if>
             <if test="isQuestion != null">#{isQuestion},</if>
             <if test="isModify != null">#{isModify},</if>
             <if test="reserved1 != null">#{reserved1},</if>
@@ -67,8 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reserved3 != null">#{reserved3},</if>
             <if test="reserved4 != null">#{reserved4},</if>
             <if test="reserved5 != null">#{reserved5},</if>
-            sysdate()
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateSysPoliceWork" parameterType="SysPoliceWork">
@@ -76,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="agencyName != null">agency_name = #{agencyName},</if>
             <if test="writeName != null">write_name = #{writeName},</if>
+            <if test="writeTime != null">write_time = #{writeTime},</if>
             <if test="isQuestion != null">is_question = #{isQuestion},</if>
             <if test="isModify != null">is_modify = #{isModify},</if>
             <if test="reserved1 != null">reserved_1 = #{reserved1},</if>
@@ -92,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSysPoliceWorkByIds" parameterType="String">
-        delete from sys_police_work where id in 
+        delete from sys_police_work where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
