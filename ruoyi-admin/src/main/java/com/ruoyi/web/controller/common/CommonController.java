@@ -71,10 +71,9 @@ public class CommonController
     @ResponseBody
     public AjaxResult uploadFile(MultipartFile file) throws Exception
     {
-        log.info("=============================进入上传文件====================================");
+        log.info("=============================进入上传文件===================================={}",file);
         try
         {
-
             // 上传文件路径
             String filePath = RuoYiConfig.getUploadPath();
             log.info("=============================上传文件路径===================================={}",file);
@@ -88,6 +87,7 @@ public class CommonController
         }
         catch (Exception e)
         {
+            log.info("上传文件异常===================================={}",e.getMessage());
             return AjaxResult.error(e.getMessage());
         }
     }

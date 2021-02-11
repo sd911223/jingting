@@ -281,6 +281,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/common/upload", "anon");
         //预览
         filterChainDefinitionMap.put("/profile/upload/**", "anon");
+        //结束时间
+        filterChainDefinitionMap.put("/system/work/finish/**", "anon");
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         filters.put("onlineSession", onlineSessionFilter());

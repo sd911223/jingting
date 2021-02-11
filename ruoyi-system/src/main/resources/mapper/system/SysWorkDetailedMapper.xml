@@ -8,7 +8,10 @@
         <result property="id" column="id"/>
         <result property="jobNumber" column="job_number"/>
         <result property="phone" column="phone"/>
-        <result property="imgUrl" column="img_url"/>
+        <result property="imgUrl1" column="img_url_1"/>
+        <result property="imgUrl2" column="img_url_2"/>
+        <result property="imgUrl3" column="img_url_3"/>
+        <result property="imgUrl4" column="img_url_4"/>
         <result property="agencyName" column="agency_name"/>
         <result property="userName" column="user_name"/>
         <result property="isJob" column="is_job"/>
@@ -96,7 +99,12 @@
     </resultMap>
 
     <sql id="selectSysWorkDetailedVo">
-        select id,phone, job_number, user_name, is_job, is_not_job, is_identical, exist_issue, implement_situation, goods_is_tidy, bedding_is_tidy, tableware_is_tidy, health_is_standard, health_is_blind, exist_issue_1, implement_situation_1, clothes_is_standard, nails_is_standard, exist_issue_2, implement_situation_2, card_is_health, card_is_equipment, card_is_situation, card_is_repair, exist_issue_3, implement_situation_3, video_is_health, video_is_job, video_is_phone, video_is_bedding, video_is_leader, exist_issue_4, implement_situation_4, meeting_is_meeting, meeting_is_job, meeting_is_fake, meeting_is_language, meeting_is_file, exist_issue_5, implement_situation_5, all_is_advance, all_is_content, all_is_log, all_is_grasp, all_is_language, all_is_write, exist_issue_6, implement_situation_6, electron_is_grasp, electron_is_input, electron_is_error, exist_issue_11, implement_situation_11, briefing_is_write, briefing_is_sign, briefing_is_situation, briefing_is_intelligence, exist_issue_7, implement_situation_7, epidemic_is_supplies, epidemic_is_code, epidemic_is_disinfection, epidemic_is_ledger, epidemic_is_ventilation, epidemic_is_temperature, epidemic_is_card, exist_issue_8, implement_situation_8, minute_is_circuit, minute_is_equipment, minute_is_handle, minute_is_specification, minute_is_complete, exist_issue_9, implement_situation_9, basis_is_join, basis_is_intact, basis_is_video, basis_is_check, basis_is_ledger, basis_is_alarm, basis_is_test, basis_is_call, exist_issue_10, implement_situation_10, write_time from sys_work_detailed
+        select id,
+        phone, img_url_1,img_url_2,img_url_3,img_url_4,agency_name,
+        job_number,
+        user_name,
+        is_job,
+         is_not_job, is_identical, exist_issue, implement_situation, goods_is_tidy, bedding_is_tidy, tableware_is_tidy, health_is_standard, health_is_blind, exist_issue_1, implement_situation_1, clothes_is_standard, nails_is_standard, exist_issue_2, implement_situation_2, card_is_health, card_is_equipment, card_is_situation, card_is_repair, exist_issue_3, implement_situation_3, video_is_health, video_is_job, video_is_phone, video_is_bedding, video_is_leader, exist_issue_4, implement_situation_4, meeting_is_meeting, meeting_is_job, meeting_is_fake, meeting_is_language, meeting_is_file, exist_issue_5, implement_situation_5, all_is_advance, all_is_content, all_is_log, all_is_grasp, all_is_language, all_is_write, exist_issue_6, implement_situation_6, electron_is_grasp, electron_is_input, electron_is_error, exist_issue_11, implement_situation_11, briefing_is_write, briefing_is_sign, briefing_is_situation, briefing_is_intelligence, exist_issue_7, implement_situation_7, epidemic_is_supplies, epidemic_is_code, epidemic_is_disinfection, epidemic_is_ledger, epidemic_is_ventilation, epidemic_is_temperature, epidemic_is_card, exist_issue_8, implement_situation_8, minute_is_circuit, minute_is_equipment, minute_is_handle, minute_is_specification, minute_is_complete, exist_issue_9, implement_situation_9, basis_is_join, basis_is_intact, basis_is_video, basis_is_check, basis_is_ledger, basis_is_alarm, basis_is_test, basis_is_call, exist_issue_10, implement_situation_10, write_time from sys_work_detailed
     </sql>
 
     <select id="selectSysWorkDetailedList" parameterType="SysWorkDetailed" resultMap="SysWorkDetailedResult">
@@ -104,7 +112,10 @@
         <where>
             <if test="jobNumber != null  and jobNumber != ''">and job_number = #{jobNumber}</if>
             <if test="phone != null  and phone != ''">and phone = #{phone}</if>
-            <if test="imgUrl != null  and imgUrl != ''">and img_url = #{imgUrl}</if>
+            <if test="imgUrl1 != null  and imgUrl != ''">and img_url_1 = #{imgUrl1}</if>
+            <if test="imgUrl2!= null  and imgUrl != ''">and img_url_2 = #{imgUrl2}</if>
+            <if test="imgUrl3 != null  and imgUrl != ''">and img_url_3 = #{imgUrl3}</if>
+            <if test="imgUrl4 != null  and imgUrl != ''">and img_url_4 = #{imgUrl4}</if>
             <if test="agencyName != null  and agencyName != ''">and agency_name = #{agencyName}</if>
             <if test="userName != null  and userName != ''">and user_name like concat('%', #{userName}, '%')</if>
             <if test="isJob != null  and isJob != ''">and is_job = #{isJob}</if>
@@ -263,7 +274,10 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="jobNumber != null">job_number,</if>
             <if test="phone != null">phone,</if>
-            <if test="imgUrl != null">img_url,</if>
+            <if test="imgUrl1 != null">img_url_1,</if>
+            <if test="imgUrl2 != null">img_url_2,</if>
+            <if test="imgUrl3 != null">img_url_3,</if>
+            <if test="imgUrl4 != null">img_url_4,</if>
             <if test="agencyName != null">agency_name,</if>
             <if test="userName != null">user_name,</if>
             <if test="isJob != null">is_job,</if>
@@ -352,7 +366,10 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="jobNumber != null">#{jobNumber},</if>
             <if test="phone != null">#{phone},</if>
-            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="imgUrl1 != null">#{imgUrl1},</if>
+            <if test="imgUrl2 != null">#{imgUrl2},</if>
+            <if test="imgUrl3 != null">#{imgUrl3},</if>
+            <if test="imgUrl4 != null">#{imgUrl4},</if>
             <if test="agencyName != null">#{agencyName},</if>
             <if test="userName != null">#{userName},</if>
             <if test="isJob != null">#{isJob},</if>

@@ -30,9 +30,20 @@ public class SysWorkDetailed extends BaseEntity {
     /**
      * 图片url
      */
-    private String imgUrl;
+    private String imgUrl1;
 
-
+    /**
+     * 图片url
+     */
+    private String imgUrl2;
+    /**
+     * 图片url
+     */
+    private String imgUrl3;
+    /**
+     * 图片url
+     */
+    private String imgUrl4;
     /**
      * 机构名称
      */
@@ -543,16 +554,40 @@ public class SysWorkDetailed extends BaseEntity {
     @Excel(name = "填写时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date writeTime;
 
-    public String getImgUrl() {
-        return imgUrl;
+    public void setImgUrl1(String imgUrl1) {
+        this.imgUrl1 = imgUrl1;
+    }
+
+    public void setImgUrl2(String imgUrl2) {
+        this.imgUrl2 = imgUrl2;
+    }
+
+    public void setImgUrl3(String imgUrl3) {
+        this.imgUrl3 = imgUrl3;
+    }
+
+    public void setImgUrl4(String imgUrl4) {
+        this.imgUrl4 = imgUrl4;
+    }
+
+    public String getImgUrl1() {
+        return imgUrl1;
+    }
+
+    public String getImgUrl2() {
+        return imgUrl2;
+    }
+
+    public String getImgUrl3() {
+        return imgUrl3;
+    }
+
+    public String getImgUrl4() {
+        return imgUrl4;
     }
 
     public String getAgencyName() {
         return agencyName;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
     }
 
     public void setAgencyName(String agencyName) {

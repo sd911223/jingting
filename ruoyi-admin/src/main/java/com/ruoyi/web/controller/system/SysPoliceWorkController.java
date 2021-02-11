@@ -6,6 +6,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.SysPoliceRange;
 import com.ruoyi.system.domain.SysPoliceWork;
 import com.ruoyi.system.service.ISysPoliceWorkService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -89,12 +90,16 @@ public class SysPoliceWorkController extends BaseController
     /**
      * 工作结束
      */
-    @GetMapping("/finish/{phone}")
-    public AjaxResult edit(@PathVariable("phone") String phone)
+    @Log(title = "工作结束", businessType = BusinessType.UPDATE)
+    @PostMapping("/finish")
+    @ResponseBody
+    public AjaxResult edit(@RequestBody SysPoliceRange sysPoliceRange)
     {
+        logger.info("进入-----结束工作=======手机号:{}",sysPoliceRange.getPhone());
         SysPoliceWork sysPoliceWork =new SysPoliceWork();
-        sysPoliceWork.setReserved3(phone);
+        sysPoliceWork.setReserved3(sysPoliceRange.getPhone());
         List<SysPoliceWork> policeWorkList = sysPoliceWorkService.selectSysPoliceWorkList(sysPoliceWork);
+        logger.info("进入-----结束工作=======条数:{}",policeWorkList.size());
         SysPoliceWork policeWork = policeWorkList.get(0);
         policeWork.setReserved2(new Date());
         return toAjax(sysPoliceWorkService.updateSysPoliceWork(policeWork));

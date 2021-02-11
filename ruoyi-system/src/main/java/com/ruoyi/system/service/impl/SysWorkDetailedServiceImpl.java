@@ -66,7 +66,7 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
     @Override
     @Transactional
     public int insertSysWorkDetailed(SysWorkDetailed sysWorkDetailed) {
-        log.info("添加工作日志,手机号->{},图片:{}", sysWorkDetailed.getPhone(), sysWorkDetailed.getImgUrl());
+        log.info("添加工作日志,手机号->{},图片1:{},图片2{},图片3{},图片4:{}", sysWorkDetailed.getPhone(), sysWorkDetailed.getImgUrl1(), sysWorkDetailed.getImgUrl2(), sysWorkDetailed.getImgUrl3(), sysWorkDetailed.getImgUrl4());
         if (sysWorkDetailed.getPhone().equals("")) {
             log.info("添加工作任务异常,手机号->{}", sysWorkDetailed.getPhone());
             throw new BusinessException("添加工作任务异常，手机号：" + sysWorkDetailed.getPhone());
