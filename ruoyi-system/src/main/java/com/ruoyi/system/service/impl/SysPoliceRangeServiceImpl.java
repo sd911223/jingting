@@ -73,8 +73,12 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
             sysPoliceRange.setAgencyName(policeBooth.getPoliceBoothName());
             sysPoliceRange.setUserName(policeBooth.getName());
             log.info("设置区域,手机号{},经度:{},纬度:{}", policeBooth.getPhone(), policeBooth.getLongitude(), policeBooth.getLatitude());
+            GlobalCoordinates source = new GlobalCoordinates(policeBooth.getLatitude(), policeBooth.getLongitude());
+            GlobalCoordinates target = new GlobalCoordinates(sysPoliceRange.getLatitude(), sysPoliceRange.getLongitude());
+            double meter2 = getDistanceMeter(source, target, Ellipsoid.WGS84);
+            log.info("WGS84=============距离================={}",meter2);
             double getDistance = MapUtils.GetDistance(sysPoliceRange.getLatitude(), sysPoliceRange.getLongitude(), policeBooth.getLatitude(), policeBooth.getLongitude());
-            BigDecimal b = new BigDecimal(getDistance);
+            BigDecimal b = new BigDecimal(meter2);
             double doubleValue = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             log.info("距离=======,手机号{},距离:{}", policeBooth.getPhone(), getDistance);
             sysPoliceRange.setRangeDistance(doubleValue);
@@ -92,6 +96,19 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
         return 1;
     }
 
+
+
+    private double getJuli(){
+        GlobalCoordinates source = new GlobalCoordinates(29.490295, 106.486654);
+        GlobalCoordinates target = new GlobalCoordinates(29.615467, 106.581515);
+
+        double meter1 = getDistanceMeter(source, target, Ellipsoid.Sphere);
+        double meter2 = getDistanceMeter(source, target, Ellipsoid.WGS84);
+
+        System.out.println("Sphere坐标系计算结果："+meter1 + "米");
+        System.out.println("WGS84坐标系计算结果："+meter2 + "米");
+        return meter1;
+    }
     /**
      * 修改位置检测
      *

@@ -3,6 +3,13 @@
 <head>
     <th:block th:include="include :: header('便民警务站工作开展记录')" />
     <th:block th:include="include :: datetimepicker-css" />
+    <style>
+        .itemImg{
+            display: block;
+            width: 180px;
+
+        }
+    </style>
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -638,16 +645,35 @@
                 <label class="col-sm-3 control-label">填写时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="writeTime" th:value="${#dates.format(sysWorkDetailed.writeTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input disabled name="writeTime" th:value="${#dates.format(sysWorkDetailed.writeTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">现场图片：</label>
+                <div class="col-sm-2"> <img class="itemImg" th:src="*{imgUrl1}"></div>
+                <div class="col-sm-2"> <img class="itemImg" th:src="*{imgUrl2}"></div>
+                <div class="col-sm-2"> <img class="itemImg" th:src="*{imgUrl3}"></div>
+                <div class="col-sm-2"> <img class="itemImg" th:src="*{imgUrl4}"></div>
             </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
     <script th:inline="javascript">
+
+        let inputs = $("input");
+        let textAreas = $("textarea");
+
+        inputs.each(function(){
+            $(this).attr('disabled',true) //遍历bai得到的每du一个jquery对象
+        });
+
+        textAreas.each(function(){
+            $(this).attr('disabled',true) //遍历bai得到的每du一个jquery对象
+        });
+
         var prefix = ctx + "system/detailed";
         $("#form-detailed-edit").validate({
             focusCleanup: true
@@ -660,7 +686,7 @@
         }
 
         $("input[name='writeTime']").datetimepicker({
-            format: "yyyy-mm-dd",
+            format: "yyyy-MM-dd HH:mm:ss",
             minView: "month",
             autoclose: true
         });

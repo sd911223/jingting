@@ -29,6 +29,7 @@
             <if test="rangeDistance != null ">and range_distance = #{rangeDistance}</if>
             <if test="isDistance != null  and isDistance != ''">and is_distance = #{isDistance}</if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectSysPoliceRangeById" parameterType="Long" resultMap="SysPoliceRangeResult">

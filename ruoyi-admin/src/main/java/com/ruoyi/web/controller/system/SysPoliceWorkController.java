@@ -20,14 +20,13 @@ import java.util.List;
 
 /**
  * 工作详细Controller
- * 
+ *
  * @author ruoyi
  * @date 2021-02-08
  */
 @Controller
 @RequestMapping("/system/work")
-public class SysPoliceWorkController extends BaseController
-{
+public class SysPoliceWorkController extends BaseController {
     private String prefix = "system/work";
 
     @Autowired
@@ -35,8 +34,7 @@ public class SysPoliceWorkController extends BaseController
 
     @RequiresPermissions("system:work:view")
     @GetMapping()
-    public String work()
-    {
+    public String work() {
         return prefix + "/work";
     }
 
@@ -46,8 +44,7 @@ public class SysPoliceWorkController extends BaseController
     @RequiresPermissions("system:work:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(SysPoliceWork sysPoliceWork)
-    {
+    public TableDataInfo list(SysPoliceWork sysPoliceWork) {
         startPage();
         List<SysPoliceWork> list = sysPoliceWorkService.selectSysPoliceWorkList(sysPoliceWork);
         return getDataTable(list);
@@ -60,8 +57,7 @@ public class SysPoliceWorkController extends BaseController
     @Log(title = "工作详细", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(SysPoliceWork sysPoliceWork)
-    {
+    public AjaxResult export(SysPoliceWork sysPoliceWork) {
         List<SysPoliceWork> list = sysPoliceWorkService.selectSysPoliceWorkList(sysPoliceWork);
         ExcelUtil<SysPoliceWork> util = new ExcelUtil<SysPoliceWork>(SysPoliceWork.class);
         return util.exportExcel(list, "work");
@@ -71,8 +67,7 @@ public class SysPoliceWorkController extends BaseController
      * 新增工作详细
      */
     @GetMapping("/add")
-    public String add()
-    {
+    public String add() {
         return prefix + "/add";
     }
 
@@ -83,33 +78,35 @@ public class SysPoliceWorkController extends BaseController
     @Log(title = "工作详细", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(SysPoliceWork sysPoliceWork)
-    {
+    public AjaxResult addSave(SysPoliceWork sysPoliceWork) {
         return toAjax(sysPoliceWorkService.insertSysPoliceWork(sysPoliceWork));
     }
+
     /**
      * 工作结束
      */
     @Log(title = "工作结束", businessType = BusinessType.UPDATE)
     @PostMapping("/finish")
     @ResponseBody
-    public AjaxResult edit(@RequestBody SysPoliceRange sysPoliceRange)
-    {
-        logger.info("进入-----结束工作=======手机号:{}",sysPoliceRange.getPhone());
-        SysPoliceWork sysPoliceWork =new SysPoliceWork();
+    public AjaxResult edit(@RequestBody SysPoliceRange sysPoliceRange) {
+        logger.info("进入-----结束工作=======手机号:{}", sysPoliceRange.getPhone());
+        SysPoliceWork sysPoliceWork = new SysPoliceWork();
         sysPoliceWork.setReserved3(sysPoliceRange.getPhone());
         List<SysPoliceWork> policeWorkList = sysPoliceWorkService.selectSysPoliceWorkList(sysPoliceWork);
-        logger.info("进入-----结束工作=======条数:{}",policeWorkList.size());
+        if (policeWorkList.isEmpty()) {
+            return toAjax(0);
+        }
+        logger.info("进入-----结束工作=======条数:{}", policeWorkList.size());
         SysPoliceWork policeWork = policeWorkList.get(0);
         policeWork.setReserved2(new Date());
         return toAjax(sysPoliceWorkService.updateSysPoliceWork(policeWork));
     }
+
     /**
      * 修改工作详细
      */
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
-    {
+    public String edit(@PathVariable("id") Long id, ModelMap mmap) {
         SysPoliceWork sysPoliceWork = sysPoliceWorkService.selectSysPoliceWorkById(id);
         mmap.put("sysPoliceWork", sysPoliceWork);
         return prefix + "/edit";
@@ -122,8 +119,7 @@ public class SysPoliceWorkController extends BaseController
     @Log(title = "工作详细", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(SysPoliceWork sysPoliceWork)
-    {
+    public AjaxResult editSave(SysPoliceWork sysPoliceWork) {
         return toAjax(sysPoliceWorkService.updateSysPoliceWork(sysPoliceWork));
     }
 
@@ -132,10 +128,9 @@ public class SysPoliceWorkController extends BaseController
      */
     @RequiresPermissions("system:work:remove")
     @Log(title = "工作详细", businessType = BusinessType.DELETE)
-    @PostMapping( "/remove")
+    @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids)
-    {
+    public AjaxResult remove(String ids) {
         return toAjax(sysPoliceWorkService.deleteSysPoliceWorkByIds(ids));
     }
 }

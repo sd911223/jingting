@@ -79,22 +79,22 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
             log.info("根据手机号查询不到机构信息,手机号->{}", sysWorkDetailed.getPhone());
             throw new BusinessException("根据手机号查询不到机构信息:" + sysWorkDetailed.getPhone());
         }
-        Date date = new Date();
-        String dateTime = DateUtils.dateTime(date);
-        Date dateTime1 = DateUtils.dateTime("yyyy-MM-dd", dateTime);
-        SysWorkDetailed sysWorkDetailed1 = new SysWorkDetailed();
-        sysWorkDetailed1.setPhone(sysWorkDetailed.getPhone());
-        sysWorkDetailed1.setWriteTime(dateTime1);
-        List<SysWorkDetailed> sysWorkDetaileds = sysWorkDetailedMapper.selectSysWorkDetailedList(sysWorkDetailed1);
-        if (!sysWorkDetaileds.isEmpty()) {
-            log.info("=============================进入修改工作日志==========================");
-            SysWorkDetailed sysWorkDetailed2 = sysWorkDetaileds.get(0);
-            sysWorkDetailed.setId(sysWorkDetailed2.getId());
-            sysWorkDetailedMapper.updateSysWorkDetailed(sysWorkDetailed);
-            return 1;
-        }
+//        Date date = new Date();
+//        String dateTime = DateUtils.dateTime(date);
+//        Date dateTime1 = DateUtils.dateTime("yyyy-MM-dd", dateTime);
+//        SysWorkDetailed sysWorkDetailed1 = new SysWorkDetailed();
+//        sysWorkDetailed1.setPhone(sysWorkDetailed.getPhone());
+//        sysWorkDetailed1.setWriteTime(dateTime1);
+//        List<SysWorkDetailed> sysWorkDetaileds = sysWorkDetailedMapper.selectSysWorkDetailedList(sysWorkDetailed1);
+//        if (!sysWorkDetaileds.isEmpty()) {
+//            log.info("=============================进入修改工作日志==========================");
+//            SysWorkDetailed sysWorkDetailed2 = sysWorkDetaileds.get(0);
+//            sysWorkDetailed.setId(sysWorkDetailed2.getId());
+//            sysWorkDetailedMapper.updateSysWorkDetailed(sysWorkDetailed);
+//            return 1;
+//        }
 
-        sysWorkDetailed.setWriteTime(dateTime1);
+        sysWorkDetailed.setWriteTime(new Date());
         int workDetailed = sysWorkDetailedMapper.insertSysWorkDetailed(sysWorkDetailed);
         if (sysWorkDetailed.getId() == null) {
             log.info("获取不到工作任务主键ID,手机号->{}", sysWorkDetailed.getPhone());

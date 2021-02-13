@@ -550,7 +550,7 @@ public class SysWorkDetailed extends BaseEntity {
     /**
      * 填写时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "填写时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date writeTime;
 
