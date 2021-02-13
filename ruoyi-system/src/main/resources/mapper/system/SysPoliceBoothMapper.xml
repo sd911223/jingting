@@ -34,6 +34,7 @@
             <if test="latitude != null ">and latitude = #{latitude}</if>
             <if test="rangeArea != null ">and range_area = #{rangeArea}</if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectSysPoliceBoothById" parameterType="Long" resultMap="SysPoliceBoothResult">
