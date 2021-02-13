@@ -29,7 +29,7 @@ public class SysPoliceWork extends BaseEntity
     private String writeName;
 
     /** 填报时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "填报时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date writeTime;
 
@@ -46,7 +46,7 @@ public class SysPoliceWork extends BaseEntity
     private Long reserved1;
 
     /** 结束时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date reserved2;
 

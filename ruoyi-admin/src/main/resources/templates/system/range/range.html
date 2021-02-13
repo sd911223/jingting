@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('位置预测列表')"/>
+    <th:block th:include="include :: header('位置检测列表')"/>
 </head>
 <body class="gray-bg">
 <div class="container-div">
@@ -13,6 +13,14 @@
                         <li>
                             <label>手机号：</label>
                             <input type="text" name="phone"/>
+                        </li>
+                        <li>
+                            <label>用户名称：</label>
+                            <input type="text" name="userName"/>
+                        </li>
+                        <li>
+                            <label>机构名称：</label>
+                            <input type="text" name="agencyName"/>
                         </li>
                         <li>
                             <label>距离范围：</label>
@@ -82,7 +90,7 @@
                 },
                 {
                     field: 'userName',
-                    title: '姓名'
+                    title: '用户名称'
                 },
                 {
                     field: 'agencyName',
@@ -100,7 +108,6 @@
                     field: 'createTime',
                     title: '预警时间'
                 },
-
                 {
                     title: '操作',
                     align: 'center',

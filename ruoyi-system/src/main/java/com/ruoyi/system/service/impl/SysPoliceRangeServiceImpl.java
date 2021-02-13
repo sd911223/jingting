@@ -76,7 +76,7 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
             GlobalCoordinates source = new GlobalCoordinates(policeBooth.getLatitude(), policeBooth.getLongitude());
             GlobalCoordinates target = new GlobalCoordinates(sysPoliceRange.getLatitude(), sysPoliceRange.getLongitude());
             double meter2 = getDistanceMeter(source, target, Ellipsoid.WGS84);
-            log.info("WGS84=============距离================={}",meter2);
+            log.info("WGS84=============距离================={}", meter2);
             double getDistance = MapUtils.GetDistance(sysPoliceRange.getLatitude(), sysPoliceRange.getLongitude(), policeBooth.getLatitude(), policeBooth.getLongitude());
             BigDecimal b = new BigDecimal(meter2);
             double doubleValue = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -85,30 +85,18 @@ public class SysPoliceRangeServiceImpl implements ISysPoliceRangeService {
             if (doubleValue > policeBooth.getRangeArea()) {
                 sysPoliceRange.setIsDistance("否");
                 return sysPoliceRangeMapper.insertSysPoliceRange(sysPoliceRange);
-            } else {
-                sysPoliceRange.setIsDistance("是");
             }
+//            else {
+//                sysPoliceRange.setIsDistance("是");
+//                return sysPoliceRangeMapper.insertSysPoliceRange(sysPoliceRange);
+//            }
         } else {
             log.info("根据手机号查询不到机构信息,手机号->{}", sysPoliceRange.getPhone());
             throw new BusinessException("根据手机号查询不到机构信息:" + sysPoliceRange.getPhone());
         }
-
         return 1;
     }
 
-
-
-    private double getJuli(){
-        GlobalCoordinates source = new GlobalCoordinates(29.490295, 106.486654);
-        GlobalCoordinates target = new GlobalCoordinates(29.615467, 106.581515);
-
-        double meter1 = getDistanceMeter(source, target, Ellipsoid.Sphere);
-        double meter2 = getDistanceMeter(source, target, Ellipsoid.WGS84);
-
-        System.out.println("Sphere坐标系计算结果："+meter1 + "米");
-        System.out.println("WGS84坐标系计算结果："+meter2 + "米");
-        return meter1;
-    }
     /**
      * 修改位置检测
      *

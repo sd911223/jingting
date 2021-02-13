@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="selectSysPoliceRangeVo">
-        select id, phone, range_distance, is_distance, del_flag, create_time from sys_police_range
+        select id, phone, user_name,agency_name,range_distance, is_distance, del_flag, create_time from sys_police_range
     </sql>
 
     <select id="selectSysPoliceRangeList" parameterType="com.ruoyi.system.domain.SysPoliceRange"
