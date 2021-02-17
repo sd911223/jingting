@@ -93,6 +93,11 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
 //            sysWorkDetailedMapper.updateSysWorkDetailed(sysWorkDetailed);
 //            return 1;
 //        }
+        SysPoliceWork sysPoliceWork = new SysPoliceWork();
+        if (sysWorkDetailed.getWriteTime()!=null){
+            log.info("开始时间不为空!================赋值,并置空,时间:{}",sysWorkDetailed.getWriteTime());
+        }
+        sysPoliceWork.setWriteTime(sysWorkDetailed.getWriteTime());
 
         sysWorkDetailed.setWriteTime(new Date());
         int workDetailed = sysWorkDetailedMapper.insertSysWorkDetailed(sysWorkDetailed);
@@ -100,7 +105,7 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
             log.info("获取不到工作任务主键ID,手机号->{}", sysWorkDetailed.getPhone());
             throw new BusinessException("获取不到工作任务主键ID:,手机号->{}" + sysWorkDetailed.getPhone());
         }
-        SysPoliceWork sysPoliceWork = new SysPoliceWork();
+
         if (!sysWorkDetailed.getExistIssue1().equals("") ||
                 !sysWorkDetailed.getExistIssue2().equals("") ||
                 !sysWorkDetailed.getExistIssue3().equals("") ||
@@ -133,11 +138,12 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
         } else {
             sysPoliceWork.setIsModify("否");
         }
+
+
         sysPoliceWork.setReserved3(sysWorkDetailed.getPhone());
         sysPoliceWork.setReserved1(sysWorkDetailed.getId());
         sysPoliceWork.setWriteName(policeBooth.getName());
         sysPoliceWork.setAgencyName(policeBooth.getPoliceBoothName());
-        sysPoliceWork.setWriteTime(new Date());
         sysPoliceWorkMapper.insertSysPoliceWork(sysPoliceWork);
         return workDetailed;
     }

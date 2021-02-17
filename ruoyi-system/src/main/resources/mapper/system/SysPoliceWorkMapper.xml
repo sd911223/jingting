@@ -43,6 +43,19 @@
         <include refid="selectSysPoliceWorkVo"/>
         where id = #{id}
     </select>
+    <select id="selectSysPoliceWorkCount"
+            parameterType="com.ruoyi.system.domain.SysPoliceWork"
+            resultType="java.lang.Integer">
+        select count(1) from sys_police_work
+        <where>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(write_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(write_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
 
     <insert id="insertSysPoliceWork" parameterType="SysPoliceWork" useGeneratedKeys="true" keyProperty="id">
         insert into sys_police_work

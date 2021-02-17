@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysTimingCountMapper">
+
+    <resultMap type="SysTimingCount" id="SysTimingCountResult">
+        <result property="id" column="id"/>
+        <result property="deviateNumber" column="deviate_number"/>
+        <result property="reportNumber" column="report_number"/>
+        <result property="questionNumber" column="question_number"/>
+        <result property="rectifyNumber" column="rectify_number"/>
+        <result property="recordTime" column="record_time"/>
+    </resultMap>
+
+    <sql id="selectSysTimingCountVo">
+        select id, deviate_number, report_number, question_number, rectify_number, record_time from sys_timing_count
+    </sql>
+
+    <select id="selectSysTimingCountList" parameterType="SysTimingCount" resultMap="SysTimingCountResult">
+        <include refid="selectSysTimingCountVo"/>
+        <where>
+            <if test="deviateNumber != null ">and deviate_number = #{deviateNumber}</if>
+            <if test="reportNumber != null ">and report_number = #{reportNumber}</if>
+            <if test="questionNumber != null ">and question_number = #{questionNumber}</if>
+            <if test="rectifyNumber != null ">and rectify_number = #{rectifyNumber}</if>
+            <if test="recordTime != null ">and record_time = #{recordTime}</if>
+        </where>
+    </select>
+
+    <select id="selectSysTimingCountById" parameterType="Integer" resultMap="SysTimingCountResult">
+        <include refid="selectSysTimingCountVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSysTimingCount" parameterType="SysTimingCount" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_timing_count
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviateNumber != null">deviate_number,</if>
+            <if test="reportNumber != null">report_number,</if>
+            <if test="questionNumber != null">question_number,</if>
+            <if test="rectifyNumber != null">rectify_number,</if>
+            <if test="recordTime != null">record_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviateNumber != null">#{deviateNumber},</if>
+            <if test="reportNumber != null">#{reportNumber},</if>
+            <if test="questionNumber != null">#{questionNumber},</if>
+            <if test="rectifyNumber != null">#{rectifyNumber},</if>
+            <if test="recordTime != null">#{recordTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSysTimingCount" parameterType="SysTimingCount">
+        update sys_timing_count
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviateNumber != null">deviate_number = #{deviateNumber},</if>
+            <if test="reportNumber != null">report_number = #{reportNumber},</if>
+            <if test="questionNumber != null">question_number = #{questionNumber},</if>
+            <if test="rectifyNumber != null">rectify_number = #{rectifyNumber},</if>
+            <if test="recordTime != null">record_time = #{recordTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysTimingCountById" parameterType="Integer">
+        delete from sys_timing_count where id = #{id}
+    </delete>
+
+    <delete id="deleteSysTimingCountByIds" parameterType="String">
+        delete from sys_timing_count where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
