@@ -8,6 +8,7 @@ import com.ruoyi.system.domain.SysTimingCount;
 import com.ruoyi.system.domain.SysWorkDetailed;
 import com.ruoyi.system.mapper.SysPoliceRangeMapper;
 import com.ruoyi.system.mapper.SysPoliceWorkMapper;
+import com.ruoyi.system.mapper.SysTimingCountMapper;
 import com.ruoyi.system.mapper.SysWorkDetailedMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,8 @@ public class RyTask {
     private SysPoliceWorkMapper sysPoliceWorkMapper;
     @Autowired
     private SysWorkDetailedMapper sysWorkDetailedMapper;
+    @Autowired
+    private SysTimingCountMapper sysTimingCountMapper;
 
     public void ryMultipleParams(String s, Boolean b, Long l, Double d, Integer i) {
         System.out.println(StringUtils.format("执行多参方法： 字符串类型{}，布尔类型{}，长整型{}，浮点型{}，整形{}", s, b, l, d, i));
@@ -81,97 +84,99 @@ public class RyTask {
         sysWorkDetailed.setParams(hashMap);
         List<SysWorkDetailed> list = sysWorkDetailedMapper.selectSysWorkDetailedList(sysWorkDetailed);
         List<SysWorkDetailed> sysWorkDetailedList = sysWorkDetailedMapper.selectSysWorkDetailedList(sysWorkDetailed);
-
+        int i = 0;
         Iterator<SysWorkDetailed> detailedIterator = sysWorkDetailedList.iterator();
         while (detailedIterator.hasNext()) {
             SysWorkDetailed sysWorkDetailed1 = detailedIterator.next();
-            if ("无".equals(sysWorkDetailed1.getImplementSituation()) || "".equals(sysWorkDetailed1.getImplementSituation())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation1()) || "".equals(sysWorkDetailed1.getImplementSituation1())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation1())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation2()) || "".equals(sysWorkDetailed1.getImplementSituation2())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation2())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation3()) || "".equals(sysWorkDetailed1.getImplementSituation3())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation3())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation4()) || "".equals(sysWorkDetailed1.getImplementSituation4())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation4())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation5()) || "".equals(sysWorkDetailed1.getImplementSituation5())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation5())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation6()) || "".equals(sysWorkDetailed1.getImplementSituation6())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation6())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation7()) || "".equals(sysWorkDetailed1.getImplementSituation7())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation7())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation8()) || "".equals(sysWorkDetailed1.getImplementSituation8())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation8())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation9()) || "".equals(sysWorkDetailed1.getImplementSituation9())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation9())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation10()) || "".equals(sysWorkDetailed1.getImplementSituation10())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation10())) {
+                i++;
             }
-            if ("无".equals(sysWorkDetailed1.getImplementSituation11()) || "".equals(sysWorkDetailed1.getImplementSituation11())) {
-                detailedIterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getImplementSituation11())) {
+                i++;
             }
         }
-
+        int j = 0;
         //遍历删除,除去没有问题的
         Iterator<SysWorkDetailed> iterator = list.iterator();
         while (iterator.hasNext()) {
             SysWorkDetailed sysWorkDetailed1 = iterator.next();
-            if ("无".equals(sysWorkDetailed1.getExistIssue()) || "".equals(sysWorkDetailed1.getExistIssue())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue1()) || "".equals(sysWorkDetailed1.getExistIssue1())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue1())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue2()) || "".equals(sysWorkDetailed1.getExistIssue2())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue2())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue3()) || "".equals(sysWorkDetailed1.getExistIssue3())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue3())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue4()) || "".equals(sysWorkDetailed1.getExistIssue4())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue4())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue5()) || "".equals(sysWorkDetailed1.getExistIssue5())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue5())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue6()) || "".equals(sysWorkDetailed1.getExistIssue6())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue6())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue7()) || "".equals(sysWorkDetailed1.getExistIssue7())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue7())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue8()) || "".equals(sysWorkDetailed1.getExistIssue8())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue8())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue9()) || "".equals(sysWorkDetailed1.getExistIssue9())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue9())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue10()) || "".equals(sysWorkDetailed1.getExistIssue10())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue10())) {
+                j++;
             }
-            if ("无".equals(sysWorkDetailed1.getExistIssue11()) || "".equals(sysWorkDetailed1.getExistIssue11())) {
-                iterator.remove();
+            if (!"无".equals(sysWorkDetailed1.getExistIssue11())) {
+                j++;
             }
         }
-        log.info("存在问题个数:{}", list.size());
+        log.info("存在问题个数:{}", i);
 
-        log.info("整改问题个数:{}", sysWorkDetailedList.size());
+        log.info("整改问题个数:{}", j);
 
         sysTimingCount.setDeviateNumber(rangeCount);
-        sysTimingCount.setRectifyNumber(workCount);
-        sysTimingCount.setQuestionNumber(list.size());
-        sysTimingCount.setRectifyNumber(sysWorkDetailedList.size());
+        sysTimingCount.setReportNumber(workCount);
+        sysTimingCount.setRectifyNumber(j);
+        sysTimingCount.setQuestionNumber(i);
+
         sysTimingCount.setRecordTime(new Date());
+        sysTimingCountMapper.insertSysTimingCount(sysTimingCount);
     }
 }

@@ -26,6 +26,7 @@
             <if test="rectifyNumber != null ">and rectify_number = #{rectifyNumber}</if>
             <if test="recordTime != null ">and record_time = #{recordTime}</if>
         </where>
+        ORDER BY record_time desc
     </select>
 
     <select id="selectSysTimingCountById" parameterType="Integer" resultMap="SysTimingCountResult">
