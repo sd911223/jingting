@@ -77,8 +77,8 @@ public class RyTask {
         log.info("走出范围人数:{}", rangeCount);
         SysPoliceWork sysPoliceWork = new SysPoliceWork();
         sysPoliceWork.setParams(hashMap);
-        int workCount = sysPoliceWorkMapper.selectSysPoliceWorkCount(sysPoliceWork);
-        log.info("工作记录人数:{}", workCount);
+        List<SysPoliceWork> workCount = sysPoliceWorkMapper.selectSysPoliceWorkCount(sysPoliceWork);
+        log.info("工作记录人数:{}", workCount.size());
 
         SysWorkDetailed sysWorkDetailed = new SysWorkDetailed();
         sysWorkDetailed.setParams(hashMap);
@@ -172,7 +172,7 @@ public class RyTask {
         log.info("整改问题个数:{}", j);
 
         sysTimingCount.setDeviateNumber(rangeCount);
-        sysTimingCount.setReportNumber(workCount);
+        sysTimingCount.setReportNumber(workCount.size());
         sysTimingCount.setRectifyNumber(j);
         sysTimingCount.setQuestionNumber(i);
 

@@ -45,8 +45,8 @@
     </select>
     <select id="selectSysPoliceWorkCount"
             parameterType="com.ruoyi.system.domain.SysPoliceWork"
-            resultType="java.lang.Integer">
-        select count(1) from sys_police_work
+            resultMap="SysPoliceWorkResult">
+        SELECT DISTINCT reserved_3 FROM sys_police_work
         <where>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 and date_format(write_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')

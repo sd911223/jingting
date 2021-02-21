@@ -22,7 +22,7 @@ public interface SysPoliceWorkMapper {
     /**
      *
      */
-    int selectSysPoliceWorkCount(SysPoliceWork sysPoliceWork);
+    List<SysPoliceWork> selectSysPoliceWorkCount(SysPoliceWork sysPoliceWork);
 
     /**
      * 查询工作详细列表
