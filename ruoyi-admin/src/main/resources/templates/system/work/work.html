@@ -21,10 +21,11 @@
                                 <label>填报人：</label>
                                 <input type="text" name="writeName"/>
                             </li>
-                            <li>
-                                <label>填报时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择填报时间" name="writeTime"/>
-                            </li>
+<!--                            <li>-->
+<!--                                <label>填报时间：</label>-->
+<!--                                <input type="text" class="time-input" placeholder="请选择填报时间" name="writeTime"/>-->
+<!--                                <input id="writeTime" name="writeTime" class="time-input" placeholder="yyyy-MM-dd HH:mm:ss" type="text">-->
+<!--                            </li>-->
                             <li>
                                 <label>是否存在问题：</label>
                                 <input type="text" name="isQuestion"/>
@@ -37,10 +38,11 @@
 <!--                                <label>工作ID：</label>-->
 <!--                                <input type="text" name="reserved1"/>-->
 <!--                            </li>-->
-                            <li>
-                                <label>结束时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择结束时间" name="reserved2"/>
-                            </li>
+<!--                            <li>-->
+<!--                                <label>结束时间：</label>-->
+<!--                                <input type="text" class="time-input" placeholder="请选择结束时间" name="reserved2"/>-->
+<!--                                <input id="reserved2" name="reserved2" class="time-input" placeholder="yyyy-MM-dd HH:mm:ss" type="text">-->
+<!--                            </li>-->
 <!--                            <li>-->
 <!--                                <label>：</label>-->
 <!--                                <input type="text" name="reserved3"/>-->
@@ -160,6 +162,23 @@
                 }]
             };
             $.table.init(options);
+        });
+
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+
+
+            laydate.render({
+                elem: '#writeTime',
+                type: 'datetime',
+                trigger: 'click'
+            });
+
+            laydate.render({
+                elem: '#reserved2',
+                type: 'datetime',
+                trigger: 'click'
+            });
         });
     </script>
 </body>

@@ -27,7 +27,8 @@
         <where>
             <if test="agencyName != null  and agencyName != ''"> and agency_name = #{agencyName}</if>
             <if test="writeName != null  and writeName != ''"> and write_name like concat('%', #{writeName}, '%')</if>
-            <if test="writeTime != null "> and write_time = #{writeTime}</if>
+            <if test="writeTime != null ">
+             and write_time = #{writeTime}</if>
             <if test="isQuestion != null  and isQuestion != ''"> and is_question = #{isQuestion}</if>
             <if test="isModify != null  and isModify != ''"> and is_modify = #{isModify}</if>
             <if test="reserved1 != null "> and reserved_1 = #{reserved1}</if>

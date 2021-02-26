@@ -51,15 +51,12 @@ public class SysPoliceWork extends BaseEntity
     private Date reserved2;
 
     /**  */
-    @Excel(name = "")
     private String reserved3;
 
     /**  */
-    @Excel(name = "")
     private String reserved4;
 
     /**  */
-    @Excel(name = "")
     private String reserved5;
 
     public void setId(Long id)

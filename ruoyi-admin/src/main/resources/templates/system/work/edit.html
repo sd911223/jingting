@@ -26,7 +26,7 @@
                 <label class="col-sm-3 control-label">填报时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="writeTime" th:value="${#dates.format(sysPoliceWork.writeTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="writeTime" name="writeTime" th:value="${#dates.format(sysPoliceWork.writeTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -49,11 +49,11 @@
 <!--                    <input name="reserved1" th:field="*{reserved1}" class="form-control" type="text">-->
 <!--                </div>-->
 <!--            </div>-->
-            <div class="form-group">    
+            <div class="form-group">
                 <label class="col-sm-3 control-label">结束时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="reserved2" th:value="${#dates.format(sysPoliceWork.reserved2, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input id="reserved2" name="reserved2" th:value="${#dates.format(sysPoliceWork.reserved2, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -92,16 +92,21 @@
             }
         }
 
-        $("input[name='writeTime']").datetimepicker({
-            format: "yyyy-MM-dd HH:mm:ss",
-            minView: "month",
-            autoclose: true
-        });
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
 
-        $("input[name='reserved2']").datetimepicker({
-            format: "yyyy-MM-dd HH:mm:ss",
-            minView: "month",
-            autoclose: true
+
+            laydate.render({
+                elem: '#writeTime',
+                type: 'datetime',
+                trigger: 'click'
+            });
+
+            laydate.render({
+                elem: '#reserved2',
+                type: 'datetime',
+                trigger: 'click'
+            });
         });
     </script>
 </body>

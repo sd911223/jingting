@@ -25,7 +25,7 @@
                 <label class="col-sm-3 control-label">填报时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="writeTime" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+                        <input id="writeTime" name="writeTime" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <label class="col-sm-3 control-label">结束时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="reserved2" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+                        <input id="reserved2" name="reserved2" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -91,16 +91,21 @@
             }
         }
 
-        $("input[name='writeTime']").datetimepicker({
-            format: "yyyy-mm-dd hh:ii:ss",
-            minView: "month",
-            autoclose: true
-        });
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
 
-        $("input[name='reserved2']").datetimepicker({
-            format: "yyyy-mm-dd hh:ii:ss",
-            minView: "month",
-            autoclose: true
+
+            laydate.render({
+                elem: '#writeTime',
+                type: 'datetime',
+                trigger: 'click'
+            });
+
+            laydate.render({
+                elem: '#reserved2',
+                type: 'datetime',
+                trigger: 'click'
+            });
         });
     </script>
 </body>
