@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TtttMapper">
+    
+    <resultMap type="Tttt" id="TtttResult">
+        <result property="id"    column="id"    />
+        <result property="test1"    column="test_1"    />
+        <result property="test2"    column="test_2"    />
+    </resultMap>
+
+    <sql id="selectTtttVo">
+        select id, test_1, test_2 from tttt
+    </sql>
+
+    <select id="selectTtttList" parameterType="Tttt" resultMap="TtttResult">
+        <include refid="selectTtttVo"/>
+        <where>  
+            <if test="test1 != null  and test1 != ''"> and test_1 = #{test1}</if>
+            <if test="test2 != null  and test2 != ''"> and test_2 = #{test2}</if>
+        </where>
+    </select>
+    
+    <select id="selectTtttById" parameterType="Long" resultMap="TtttResult">
+        <include refid="selectTtttVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTttt" parameterType="Tttt" useGeneratedKeys="true" keyProperty="id">
+        insert into tttt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="test1 != null">test_1,</if>
+            <if test="test2 != null">test_2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="test1 != null">#{test1},</if>
+            <if test="test2 != null">#{test2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTttt" parameterType="Tttt">
+        update tttt
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="test1 != null">test_1 = #{test1},</if>
+            <if test="test2 != null">test_2 = #{test2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTtttById" parameterType="Long">
+        delete from tttt where id = #{id}
+    </delete>
+
+    <delete id="deleteTtttByIds" parameterType="String">
+        delete from tttt where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
