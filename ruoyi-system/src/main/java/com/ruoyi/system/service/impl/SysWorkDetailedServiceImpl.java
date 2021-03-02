@@ -2,7 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.BusinessException;
-import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.system.domain.SysPoliceBooth;
 import com.ruoyi.system.domain.SysPoliceWork;
 import com.ruoyi.system.domain.SysWorkDetailed;
@@ -65,7 +65,8 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
      */
     @Override
     @Transactional
-    public int insertSysWorkDetailed(SysWorkDetailed sysWorkDetailed) {
+    public synchronized int insertSysWorkDetailed(SysWorkDetailed sysWorkDetailed) {
+        String fastSimpleUUID = IdUtils.fastSimpleUUID();
         log.info("添加工作日志,手机号->{},图片1:{},图片2{},图片3{},图片4:{}", sysWorkDetailed.getPhone(), sysWorkDetailed.getImgUrl1(), sysWorkDetailed.getImgUrl2(), sysWorkDetailed.getImgUrl3(), sysWorkDetailed.getImgUrl4());
         if (sysWorkDetailed.getPhone().equals("")) {
             log.info("添加工作任务异常,手机号->{}", sysWorkDetailed.getPhone());
@@ -94,12 +95,18 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
 //            return 1;
 //        }
         SysPoliceWork sysPoliceWork = new SysPoliceWork();
-        if (sysWorkDetailed.getWriteTime()!=null){
-            log.info("开始时间不为空!================赋值,并置空,时间:{}",sysWorkDetailed.getWriteTime());
+        if (sysWorkDetailed.getWriteTime() != null) {
+            log.info("开始时间不为空!================赋值,并置空,时间:{}", sysWorkDetailed.getWriteTime());
         }
         sysPoliceWork.setWriteTime(sysWorkDetailed.getWriteTime());
 
         sysWorkDetailed.setWriteTime(new Date());
+        sysPoliceWork.setReserved3(sysWorkDetailed.getPhone());
+        List<SysPoliceWork> sysPoliceWorks = sysPoliceWorkMapper.selectSysPoliceWorkList(sysPoliceWork);
+        if (!sysPoliceWorks.isEmpty() && sysPoliceWorks.size() > 0) {
+            log.info("重复提交工作日志,手机号->{}", sysWorkDetailed.getPhone());
+            throw new BusinessException("不能重复提交工作日志!");
+        }
         int workDetailed = sysWorkDetailedMapper.insertSysWorkDetailed(sysWorkDetailed);
         if (sysWorkDetailed.getId() == null) {
             log.info("获取不到工作任务主键ID,手机号->{}", sysWorkDetailed.getPhone());
@@ -139,11 +146,10 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
             sysPoliceWork.setIsModify("否");
         }
 
-
-        sysPoliceWork.setReserved3(sysWorkDetailed.getPhone());
         sysPoliceWork.setReserved1(sysWorkDetailed.getId());
         sysPoliceWork.setWriteName(policeBooth.getName());
         sysPoliceWork.setAgencyName(policeBooth.getPoliceBoothName());
+        sysPoliceWork.setReserved5(fastSimpleUUID);
         sysPoliceWorkMapper.insertSysPoliceWork(sysPoliceWork);
         return workDetailed;
     }

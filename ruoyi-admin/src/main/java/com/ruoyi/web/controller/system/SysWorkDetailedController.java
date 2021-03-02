@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.system;
 
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -75,6 +76,7 @@ public class SysWorkDetailedController extends BaseController {
     @Log(title = "每日工作填写", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
+    @RepeatSubmit
     public AjaxResult addSave(@RequestBody SysWorkDetailed sysWorkDetailed) {
         return toAjax(sysWorkDetailedService.insertSysWorkDetailed(sysWorkDetailed));
     }
