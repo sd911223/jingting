@@ -90,27 +90,39 @@
                 },
                 {
                     field: 'phone',
-                    title: '手机号'
+                    title: '手机号',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a href="javascript:void(0)" ondblclick="$.operate.edit(\'' + row.id + '\')">' + row.phone + '</a> ');
+                        return actions.join('');
+                        // return $.table.selectDictLabel(agencyNameDatas, value);
+                    }
                 },
                 {
                     field: 'name',
-                    title: '姓名'
+                    title: '姓名',
+                    align: 'center'
                 },
                 {
                     field: 'policeBoothName',
-                    title: '机构名称'
+                    title: '机构名称',
+                    align: 'center'
                 },
                 {
                     field: 'longitude',
-                    title: '经度'
+                    title: '经度',
+                    align: 'center'
                 },
                 {
                     field: 'latitude',
-                    title: '纬度'
+                    title: '纬度',
+                    align: 'center'
                 },
                 {
                     field: 'rangeArea',
-                    title: '区域范围'
+                    title: '区域范围',
+                    align: 'center'
                 },
                 {
                     title: '操作',
