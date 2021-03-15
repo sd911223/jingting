@@ -23,11 +23,11 @@
             resultMap="SysPoliceRangeResult">
         <include refid="selectSysPoliceRangeVo"/>
         <where>
+            is_distance='否'
             <if test="phone != null  and phone != ''">and phone = #{phone}</if>
             <if test="userName != null  and phone != ''">and user_name = #{userName}</if>
             <if test="agencyName != null  and agencyName != ''">and agency_name = #{agencyName}</if>
             <if test="rangeDistance != null ">and range_distance = #{rangeDistance}</if>
-            <if test="isDistance != null  and isDistance != ''">and is_distance = #{isDistance}</if>
         </where>
         order by create_time desc
     </select>
