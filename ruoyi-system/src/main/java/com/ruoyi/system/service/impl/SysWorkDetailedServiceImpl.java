@@ -107,6 +107,16 @@ public class SysWorkDetailedServiceImpl implements ISysWorkDetailedService {
             log.info("重复提交工作日志,手机号->{}", sysWorkDetailed.getPhone());
             throw new BusinessException("不能重复提交工作日志!");
         }
+        SysPoliceWork work = new SysPoliceWork();
+        work.setReserved3(sysWorkDetailed.getPhone());
+        List<SysPoliceWork> workList = sysPoliceWorkMapper.selectSysPoliceWorkList(sysPoliceWork);
+        if (!workList.isEmpty()){
+            SysPoliceWork policeWork = workList.get(0);
+            if (policeWork.getReserved2()==null||policeWork.getReserved2().equals("")){
+                log.info("有尚未结束工作,手机号->{}", sysWorkDetailed.getPhone());
+                throw new BusinessException("有尚未结束的工作!,请先结束上次工作");
+            }
+        }
         int workDetailed = sysWorkDetailedMapper.insertSysWorkDetailed(sysWorkDetailed);
         if (sysWorkDetailed.getId() == null) {
             log.info("获取不到工作任务主键ID,手机号->{}", sysWorkDetailed.getPhone());

@@ -5,9 +5,11 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysPoliceRange;
 import com.ruoyi.system.domain.SysPoliceWork;
+import com.ruoyi.system.service.ISysPoliceRangeService;
 import com.ruoyi.system.service.ISysPoliceWorkService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class SysPoliceWorkController extends BaseController {
 
     @Autowired
     private ISysPoliceWorkService sysPoliceWorkService;
+    @Autowired
+    private ISysPoliceRangeService sysPoliceRangeService;
 
     @RequiresPermissions("system:work:view")
     @GetMapping()
@@ -96,9 +100,18 @@ public class SysPoliceWorkController extends BaseController {
         if (policeWorkList.isEmpty()) {
             return toAjax(0);
         }
-        logger.info("进入-----结束工作=======条数:{}", policeWorkList.size());
         SysPoliceWork policeWork = policeWorkList.get(0);
-        policeWork.setReserved2(new Date());
+        List<SysPoliceRange> rangeList = sysPoliceRangeService.selectSysPoliceRangeList(sysPoliceRange);
+        if (!rangeList.isEmpty()){
+            SysPoliceRange range = rangeList.get(0);
+            logger.info("进入-----结束工作=======结束人:{},结束时间:{}", sysPoliceRange.getPhone(),range.getCreateTime());
+            policeWork.setReserved2(DateUtils.getNowDate());
+        }else {
+            logger.info("进入-----结束工作=======m没有获取到结束时间,并赋值为当前时间,结束人:{}",sysPoliceRange.getPhone());
+            policeWork.setReserved2(DateUtils.getNowDate());
+        }
+        logger.info("进入-----结束工作=======条数:{}", policeWorkList.size());
+
         return toAjax(sysPoliceWorkService.updateSysPoliceWork(policeWork));
     }
 
